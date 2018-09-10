@@ -51,4 +51,20 @@ class Main extends CI_Controller {
 		$this->load->view('layout/footer.php',$data);
 
 	}
+
+	public function find_customers(){
+		
+		$recordsTotal= $this->Customers->getTotalFiltered($_REQUEST);
+        $data= $this->Customers->getFiltered($_REQUEST);
+       
+		$response=array(
+			'draw' => $_REQUEST['draw'],
+			'recordsTotal' => $recordsTotal,
+			'recordsFiltered' => $recordsTotal,
+			'data' => $data
+		);
+
+		echo json_encode($response);
+	}
+
 }

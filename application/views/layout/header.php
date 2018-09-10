@@ -17,6 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Bootstrap core CSS -->
 	<link href="<?php  echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="<?php  echo base_url();?>assets/css/font-awesome/css/fontawesome-all.css" rel="stylesheet">
+    <link href="<?php  echo base_url();?>assets/lib/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        
 
     <!-- Custom styles for this template -->
     <link href="<?php  echo base_url();?>assets/css/dashboard.css" rel="stylesheet">

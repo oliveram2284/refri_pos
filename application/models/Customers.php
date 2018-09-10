@@ -247,8 +247,78 @@ class Customers extends CI_Model {
                 ),*/
             )
         );
-
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('customers',true);
+    }
+
+
+
+    public function getTotalFiltered($data = null){
+        $response = array();
+		$this->db->select('*');
+        $this->db->from('customers as a');   
+		if($data['search']['value']!=''){
+            $this->db->or_where('c.id ',$data['search']['value']);	
+			$this->db->or_like('c.name',$data['search']['value']);	
+			$this->db->or_like('c.city',$data['search']['value']);	
+			$this->db->or_like('c.state',$data['search']['value']);	
+			$this->db->or_like('c.zip_code',$data['search']['value']);	
+			$this->db->or_like('c.mainph',$data['search']['value']);	
+			//$this->db->limit($data['length'],$data['start']);
+		}		
+        $query = $this->db->get();        
+		return $query->num_rows();
+    }
+
+    public function getFiltered( $data = null){
+        $this->db->select("*");
+        $this->db->from('customers as c');
+        switch($data['order'][0]['column']){
+            case 0:{
+                $this->db->order_by('c.id',$data['order'][0]['dir']);                
+                break;
+            }
+            case 1:{
+                $this->db->order_by('c.id',$data['order'][0]['dir']);  
+                break;
+            }
+            case 2:{
+                $this->db->order_by('c.name',$data['order'][0]['dir']);                  
+                break;
+            }
+            case 3:{
+                $this->db->order_by('c.city',$data['order'][0]['dir']);                  
+                break;
+            }
+            case 4:{
+                $this->db->order_by('c.state',$data['order'][0]['dir']);                  
+                break;
+            }
+            case 5:{
+                $this->db->order_by('c.zip_code',$data['order'][0]['dir']);                  
+                break;
+            }
+            case 5:{
+                $this->db->order_by('c.mainph',$data['order'][0]['dir']);                  
+                break;
+            }
+            default:{
+                $this->db->order_by('c.id',$data['order'][0]['dir']);
+            }
+        }
+        //$this->db->where('a.status!= ',2);	
+		if($data['search']['value']!=''){
+            $this->db->or_where('c.id ',$data['search']['value']);	
+			$this->db->or_like('c.name',$data['search']['value']);	
+			$this->db->or_like('c.city',$data['search']['value']);	
+			$this->db->or_like('c.state',$data['search']['value']);	
+			$this->db->or_like('c.zip_code',$data['search']['value']);	
+			$this->db->or_like('c.mainph',$data['search']['value']);	
+            //$this->db->or_like('DATE_FORMAT(a.date_added, "%d-%m-%Y %H:%i")',$data['search']['value']);
+		}
+		$this->db->limit($data['length'],$data['start']);
+        $query = $this->db->get();
+        //die($this->db->last_query());
+		return $query->result_array();
     }
 }

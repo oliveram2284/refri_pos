@@ -246,6 +246,7 @@
 				</div>
                 <!-- CART SECTION -->
                 
+				<input type="hidden" value="<?php echo base_url();?>" id="url">				
                 <?php $this->load->view('orders/_modal_customer_search'); ?>
                 <?php $this->load->view('orders/_modal_customer_detail'); ?>
         
