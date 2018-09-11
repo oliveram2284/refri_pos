@@ -82,9 +82,9 @@
 							<label><input type="text"  name="ship_via_description"  class="ship_via_description" class="input_custom" value="FEDEX NEXT DAY 10AM" size="20"/> <!--<span>FEDEX NEXT DAY 10AM</span> --></label>	
 						</div>
 						<div class="col  border">
-                            <label><strong>TERMS: </strong> <span>123456</span> 
-                            <button type="button" id="bt_model_terms" class="btn btn-info btn-sm float-right"><i class="fas fa-eye fa-xs"></i></button> </label> 
-							<label><span>NET 30 2% 10 DAYS</span></label>	
+                            <label><strong>TERMS: </strong><input type="text" id="term_id" name="term_id" class="input_custom" value="" size="6"/> 
+                            <button type="button" id="bt_model_terms" class="btn btn-success btn-sm float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
+							<label> <input type="text"  id="term_description" name="term_description" class="input_custom" value="" size="20"/> <!-- span>NET 30 2% 10 DAYS</span> --></label>	
 						</div>
 
 					</div>
@@ -253,5 +253,6 @@
                 <?php $this->load->view('orders/_modal_ship_search'); ?>
                 <?php $this->load->view('orders/_modal_salesman_search'); ?>
                 <?php $this->load->view('orders/_modal_ship_vias_search'); ?>
+                <?php $this->load->view('orders/_modal_terms_search'); ?>
 				
         

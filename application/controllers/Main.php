@@ -113,4 +113,19 @@ class Main extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function find_terms(){
+		
+		$recordsTotal= $this->ReceivablesTerms->getTotalFiltered($_REQUEST);
+        $data= $this->ReceivablesTerms->getFiltered($_REQUEST);
+       
+		$response=array(
+			'draw' => $_REQUEST['draw'],
+			'recordsTotal' => $recordsTotal,
+			'recordsFiltered' => $recordsTotal,
+			'data' => $data
+		);
+
+		echo json_encode($response);
+	}
+
 }

@@ -12,6 +12,7 @@ $(function() {
         "ordering": true,
         "info": true,
         "autoWidth": true,
+        "responsive": true,
         "pagingType": "simple_numbers",
         "dom": '<"top float-left col col-md-8" Bf> <"top float-right col col-md-4"p>t<"bottom float-left col col-md-6"l><"bottom float-right col col-md-6"p>',
         "columnDefs": [{
@@ -212,7 +213,7 @@ $(function() {
     });
 
     $(document).on('click', '#modal_search_ship_vias #shipvia_id', function() {
-        console.debug("#modal_search_customer #shipvia_id");
+        console.debug("#modal_search_ship_vias #shipvia_id");
         var data = $(this).data();
         console.debug("data: %o", data);
         $("form").find("#ship_via_id").val(data.id);
@@ -224,7 +225,36 @@ $(function() {
 
     $("#bt_model_terms").click(function() {
         console.debug("===> bt_model_terms");
-        $("#modal_search_customer").modal("show");
+        data_table_options.ajax.url = url + 'main/find_terms';
+        data_table_options.ajax.dataSrc = function(response) {
+            console.log(response);
+            var output = [];
+            $.each(response.data, function(index, item) {
+                console.log(index);
+                console.log(item);
+                var col0, col1, col2, col3 = '';
+                col0 = '<button class="btn btn-success btn-sm" id="term_id"  data-id="' + item.id + '" data-description="' + item.description + '" > SELECT </button>';
+                col1 = item.id;
+                col2 = item.description;
+                col3 = item.notes;
+
+                output.push([col0, col1, col2, col3]);
+            });
+            return output;
+        };
+        $('#find_terms_datatable').DataTable(data_table_options);
+        $("#modal_search_terms").modal("show");
+    });
+
+    $(document).on('click', '#modal_search_terms #term_id', function() {
+        console.debug("#modal_search_terms #term_id");
+        var data = $(this).data();
+        console.debug("data: %o", data);
+        $("form").find("#term_id").val(data.id);
+        $("form").find("#term_description").val(data.description);
+        $("#modal_search_terms").find('#find_terms_datatable').DataTable().destroy();
+        $("#modal_search_terms").modal("hide");
+        return false;
     });
 
     $("#bt_model_search_product").click(function() {
