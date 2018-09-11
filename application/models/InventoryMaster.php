@@ -372,4 +372,93 @@ class InventoryMaster extends CI_Model {
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('inv_tbl_mstr',true);
     }
+
+
+    public function getTotalFiltered($data = null){
+        $response = array();
+		$this->db->select('*');
+        $this->db->from('inv_tbl_mstr as i');   
+		if($data['search']['value']!=''){
+            $this->db->or_where('i.id ',$data['search']['value']);	
+            $this->db->or_where('i.item_id ',$data['search']['value']);	
+            $this->db->or_where('i.description1',$data['search']['value']);	
+            $this->db->or_where('i.description2',$data['search']['value']);	
+            $this->db->or_where('i.description3',$data['search']['value']);	
+			$this->db->or_like('i.vendor_id',$data['search']['value']);	
+			$this->db->or_like('i.vendor_part',$data['search']['value']);	
+			$this->db->or_like('i.department_id',$data['search']['value']);	
+			$this->db->or_like('i.category_id',$data['search']['value']);	
+			$this->db->or_like('i.group_id',$data['search']['value']);	
+			$this->db->or_like('i.family_id',$data['search']['value']);	
+		}		
+        $query = $this->db->get();        
+		return $query->num_rows();
+    }
+
+    public function getFiltered( $data = null){
+        $this->db->select("*");
+        $this->db->from('inv_tbl_mstr as i');
+        switch($data['order'][0]['column']){
+            case 0:{
+                $this->db->order_by('i.id',$data['order'][0]['dir']);                
+                break;
+            }
+            case 1:{
+                $this->db->order_by('i.item_id',$data['order'][0]['dir']);  
+                break;
+            }
+            case 2:{
+                $this->db->order_by('i.description1',$data['order'][0]['dir']);                  
+                $this->db->order_by('i.description2',$data['order'][0]['dir']);                  
+                $this->db->order_by('i.description3',$data['order'][0]['dir']);        
+                break;
+            }
+            case 3:{                
+                
+                $this->db->order_by('i.vendor_id',$data['order'][0]['dir']);         
+                break;
+            }
+            case 4:{
+                $this->db->order_by('i.vendor_part',$data['order'][0]['dir']);                  
+                                  
+                break;
+            }
+            case 5:{
+                $this->db->order_by('i.department_id',$data['order'][0]['dir']);      
+                break;
+            }
+            case 6:{
+                $this->db->order_by('i.category_id',$data['order'][0]['dir']);                  
+                break;
+            }
+            case 7:{
+                $this->db->order_by('i.group_id',$data['order'][0]['dir']);                  
+                break;
+            }
+            case 7:{
+                $this->db->order_by('i.family_id',$data['order'][0]['dir']);                  
+                break;
+            }
+            default:{
+                $this->db->order_by('i.item_id',$data['order'][0]['dir']);
+            }
+        }
+        
+        if($data['search']['value']!=''){
+            $this->db->or_where('i.id ',$data['search']['value']);	
+            $this->db->or_where('i.item_id ',$data['search']['value']);	
+            $this->db->or_where('i.description1',$data['search']['value']);	
+            $this->db->or_where('i.description2',$data['search']['value']);	
+            $this->db->or_where('i.description3',$data['search']['value']);	
+			$this->db->or_like('i.vendor_id',$data['search']['value']);	
+			$this->db->or_like('i.vendor_part',$data['search']['value']);	
+			$this->db->or_like('i.department_id',$data['search']['value']);	
+			$this->db->or_like('i.category_id',$data['search']['value']);	
+			$this->db->or_like('i.group_id',$data['search']['value']);	
+			$this->db->or_like('i.family_id',$data['search']['value']);	
+		}
+		$this->db->limit($data['length'],$data['start']);
+        $query = $this->db->get();
+		return $query->result_array();
+    }
 }
