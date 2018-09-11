@@ -60,9 +60,9 @@
 						</div>
 						
 						<div class="col col-2 border">
-                            <label><strong>SHIP TO: </strong> <span>123456</span>  
+                            <label><strong>SHIP TO: </strong> <input type="text" id="ship_id" name="ship_id"  class="input_custom"  size="5" />  
                             <button type="button" id="bt_model_ship" class="btn btn-success btn-sm float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
-							<label><strong>P/O NUM: </strong><span>12345678901234567890</span></label>	
+							<label><strong>P/O NUM: </strong><input type="text" id="ship_customer_name" name="ship_customer_name"  class="input_custom"  size="15" /></label>	
 						</div>
 						<div class="col border"> 
                             <label><strong>SALS: </strong> <input type="text" id="salesman_id" name="salesman_id"  class="input_custom"  size="5" /><!-- <span>123</span> -->

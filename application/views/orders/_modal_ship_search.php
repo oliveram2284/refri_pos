@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title text-center col-12" id="exampleModalLabel">Search ship Master</h5>
+        <h5 class="modal-title text-center col-12" id="exampleModalLabel">Search ship To</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -25,12 +25,11 @@
             <thead> 
               <tr class="table-info">
                 <th>SELECT</th>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>CITY</th>
-                <th>ST</th>
+                <th>SHIP LOC</th>
+                <th>CUSTOMER NAME</th>
+                <th>STATE</th>
                 <th>ZIP</th>
-                <th>PHONE</th>
+                <th>COUNTRY</th>
               </tr>
             </thead>
          </table>   

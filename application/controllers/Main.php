@@ -22,6 +22,7 @@ class Main extends CI_Controller {
         parent::__construct();
         $this->load->model('Operators');
         $this->load->model('Customers');
+        $this->load->model('Customer_Ship_Tos');
         $this->load->model('Salesmen');
 		$this->load->model('ShipVias');
 		$this->load->model('ReceivablesTerms');
@@ -70,8 +71,8 @@ class Main extends CI_Controller {
 
 	public function find_ship(){
 		
-		$recordsTotal= $this->Customers->getTotalFiltered($_REQUEST);
-        $data= $this->Customers->getFiltered($_REQUEST);
+		$recordsTotal= $this->Customer_Ship_Tos->getTotalFiltered($_REQUEST);
+        $data= $this->Customer_Ship_Tos->getFiltered($_REQUEST);
        
 		$response=array(
 			'draw' => $_REQUEST['draw'],
@@ -127,5 +128,6 @@ class Main extends CI_Controller {
 
 		echo json_encode($response);
 	}
+	
 
 }

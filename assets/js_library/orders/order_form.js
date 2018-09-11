@@ -14,7 +14,7 @@ $(function() {
         "autoWidth": true,
         "responsive": true,
         "pagingType": "simple_numbers",
-        "dom": '<"top float-left col col-md-8" Bf> <"top float-right col col-md-4"p>t<"bottom float-left col col-md-6"l><"bottom float-right col col-md-6"p>',
+        "dom": '<"top float-left col col-md-8" f> <"top float-right col col-md-4"p>t<"bottom float-left col col-md-6"l><"bottom float-right col col-md-6"p>',
         "columnDefs": [{
                 targets: 1,
                 className: 'noVis'
@@ -69,32 +69,8 @@ $(function() {
     };
 
 
-    /*console.log(data_table_options.ajax.url);
-    data_table_options.ajax.url = url + 'main/find_ships';
-    data_table_options.ajax.dataSrc = function(response) {
-        console.log(response);
-        var output = [];
-        $.each(response.data, function(index, item) {
-            console.log(index);
-            console.log(item);
-            var col0, col1, col2, col3, col4, col5, col6 = '';
-            col0 = '<button class="btn btn-success btn-sm" id="customer_id"  data-id="' + item.id + '" data-name="' + item.name + '" > SELECT </button>';
-            col1 = item.id;
-            col2 = item.name;
-            col3 = item.city;
-            col4 = item.state;
-            col5 = item.zip_code;
-            col6 = item.mainph;
 
-            output.push([col0, col1, col2, col3, col4, col5, col6]);
-        });
-        return output;
-    };
-    console.log(data_table_options.ajax.url);
-    console.log(data_table_options.ajax.dataSrc);
-
-
-    //$('#find_ship_datatable').DataTable(data_table_options); */
+    //$('#find_ship_datatable').DataTable(data_table_options); 
 
     $("#bt_model_customer").click(function() {
         console.debug("===> bt_model_customer");
@@ -145,10 +121,44 @@ $(function() {
 
     $("#bt_model_ship").click(function() {
         console.debug("===> bt_model_ship");
+
+        console.log(data_table_options.ajax.url);
+        data_table_options.ajax.url = url + 'main/find_ship';
+        data_table_options.ajax.dataSrc = function(response) {
+            console.log(response);
+            var output = [];
+            $.each(response.data, function(index, item) {
+                console.log(index);
+                console.log(item);
+                var col0, col1, col2, col3, col4, col5, col6 = '';
+                col0 = '<button class="btn btn-success btn-sm" id="ship_to"  data-id="' + item.id + '" data-name="' + item.customer_name + '" > SELECT </button>';
+                col1 = item.ship_loc;
+                col2 = item.customer_name;
+                col3 = item.city;
+                col4 = item.state;
+                col5 = item.zip_code;
+                col6 = item.country;
+
+                output.push([col0, col1, col2, col3, col4, col5, col6]);
+            });
+            return output;
+        };
+        console.log(data_table_options.ajax.url);
+        console.log(data_table_options.ajax.dataSrc);
+        $('#find_ship_datatable').DataTable(data_table_options);
         $("#modal_search_ship").modal("show");
     });
 
-
+    $(document).on('click', '#modal_search_ship #ship_to', function() {
+        console.debug("#modal_search_customer #ship_to");
+        var data = $(this).data();
+        console.debug("data: %o", data);
+        $("form").find("#ship_id").val(data.id);
+        $("form").find("#ship_customer_name").val(data.name);
+        $("#modal_search_ship").find('#find_ship_datatable').DataTable().destroy();
+        $("#modal_search_ship").modal("hide");
+        return false;
+    });
 
 
     $("#bt_model_sales").click(function() {
