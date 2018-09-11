@@ -1,9 +1,11 @@
 
+<form id="order_form">
 				<!-- SALESMAN SECTION -->
                 <div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-2 mb-3  box">
 					<div class="row border border-light">
+						
 						<div class="col border "> 
-							<label><strong>OPR: </strong> <input type="text" id="operador_name-input"  class="input_custom" value="<?php echo $operator['first_name']." ".$operator['last_name']?>" /> <span></span> </label> 
+							<label><strong>OPR: </strong> <input type="text" id="operador_name-input"  class="control-form input_custom" value="<?php echo $operator['first_name']." ".$operator['last_name']?>" size="20" /></label> 
 							<label><strong>LOC: </strong> <input type="text" id="operador_location-input"  class="input_custom" value="<?php echo $operator['city']?>"/></label>
 						</div>						
 						<div class="col border text-center"> 
@@ -29,14 +31,14 @@
 							</div>
 						</div>
 						<div class="col border">
-							<label><strong>DATE: </strong> <input type="text" id="" name=""  class="input_custom"  value="<?php echo date('m/d/Y')?>" /> </label> 
-							<label><strong>DOC#: </strong> <input type="text" id="" name=""  class="input_custom"   value="1234567890"/></label>	
+							<label><strong>DATE: </strong> <input type="text" id="" name=""  class="input_custom"  value="<?php echo date('m/d/Y')?>" size="10" /> </label> 
+							<label><strong>DOC#: </strong> <input type="text" id="" name=""  class="input_custom"   value="1234567890"  size="10"/></label>	
 						</div>
 						<div class="col border">
-							<label><strong>ORD: </strong> <input type="text" class="input_custom" value="9999,000.000" /> </label> 
-							<label><strong>BKO: </strong> <input type="text" class="input_custom" value="$9999,000.000" /></label>	
+							<label><strong>ORD: </strong> <input type="text" class="input_custom" value="9999,000.000" size="15"/> </label> 
+							<label><strong>BKO: </strong> <input type="text" class="input_custom" value="$9999,000.000" size="15"/></label>	
 						</div>
-						<div class="col col-3 border pt-3 text-right"> 
+						<div class="col col-2 border pt-2 text-right"> 
                             <button id="bt_save" type="button" class="btn btn-sm btn-success " ><i class="fas fa-save fa-sm"></i></button>
 							<button id="bt_pending" type="button" class="btn btn-sm btn-warning " disabled><i class="far fa-hourglass fa-sm "></i></button>
 							<button id="bt_cart" type="button" class="btn btn-sm btn-danger" disabled><i class="fas fa-shopping-cart fa-sm"></i></button>
@@ -51,37 +53,37 @@
 				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2  box">
 					<div class="row border border-light">
 						<div class="col col-2 border">
-                            <label><strong>SOLD TO: </strong> <span>123456</span>  
-                            <button id="bt_model_customer" class="btn btn-success btn-sm float-right "><i class="fas fa-search fa-xs"></i></button>  
-                            <button  id="bt_model_detail"  class="btn btn-info btn-sm float-right mr-1"><i class="fas fa-eye fa-xs"></i></button> </label> 
-							<label><span>ABC CORPORATION</span> <span class="float-right">(30)</span> </label>	
+                            <label><strong>SOLD TO: </strong> <input type="text" id="customer_id" name="customer_id"  class="input_custom"   value="" size="6"/><!--<span>123456</span>  -->
+                            <button type="button" id="bt_model_customer" class="btn btn-success btn-sm float-right "><i class="fas fa-search fa-xs"></i></button>  
+                            <button type="button" id="bt_model_detail"  class="btn btn-info btn-sm float-right mr-1"><i class="fas fa-eye fa-xs"></i></button> </label> 
+							<label><input type="text" id="customer_name" name="customer_name"  class="input_custom"  size="23" /><!--<span>ABC CORPORATION</span>--> <span class="float-right">(30)</span> </label>	
 						</div>
 						
 						<div class="col col-2 border">
                             <label><strong>SHIP TO: </strong> <span>123456</span>  
-                            <button id="bt_model_ship" class="btn btn-success btn-sm float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
+                            <button type="button" id="bt_model_ship" class="btn btn-success btn-sm float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
 							<label><strong>P/O NUM: </strong><span>12345678901234567890</span></label>	
 						</div>
 						<div class="col border"> 
-                            <label><strong>SALS: </strong> <span>123</span> 
-                            <button id="bt_model_sales" class="btn btn-info btn-sm float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
-							<label><span>PEDRO RODRIGUEZ</span> </label>
+                            <label><strong>SALS: </strong> <input type="text" id="salesman_id" name="salesman_id"  class="input_custom"  size="5" /><!-- <span>123</span> -->
+                            <button type="button" id="bt_model_sales" class="btn btn-info btn-sm float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
+							<label><input type="text" id="salesman_name" name="salesman_name"  class="input_custom"  size="25" /> <!-- <span>PEDRO RODRIGUEZ</span> --> </label>
 						</div>
 						<div class="col col-3 border">
-							<label><strong>ORDER BY: </strong> <span>PEDRO MARTINEZ</span> </label> 
-							<label><strong>P/O NUM: </strong> <span>12345678901234567890</span></label>	
+							<label><strong>ORDER BY: </strong> <input type="text" class="input_custom" value="PEDRO MARTINEZ" size="20"/> <span></span> </label> 
+							<label><strong>P/O NUM: </strong>  <input type="text" class="input_custom" value="12345678901234567890" size="20"/> <span></span></label>	
 						</div>
 
 						
 
 						<div class="col  border">
-                            <label><strong>SHIP VIA: </strong> <span>123456</span> 
-                            <button  id="bt_model_ship_via" class="btn btn-success btn-sm float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
-							<label><span>FEDEX NEXT DAY 10AM</span></label>	
+                            <label><strong>SHIP VIA: </strong>  <input type="text" id="ship_via_id" name="ship_via_id"  class="input_custom"  size="5" /> <!--<span>123456</span>--> 
+                            <button type="button"  id="bt_model_ship_via" class="btn btn-success btn-sm float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
+							<label><input type="text"  name="ship_via_description"  class="ship_via_description" class="input_custom" value="FEDEX NEXT DAY 10AM" size="20"/> <!--<span>FEDEX NEXT DAY 10AM</span> --></label>	
 						</div>
 						<div class="col  border">
                             <label><strong>TERMS: </strong> <span>123456</span> 
-                            <button  id="bt_model_terms" class="btn btn-info btn-sm float-right"><i class="fas fa-eye fa-xs"></i></button> </label> 
+                            <button type="button" id="bt_model_terms" class="btn btn-info btn-sm float-right"><i class="fas fa-eye fa-xs"></i></button> </label> 
 							<label><span>NET 30 2% 10 DAYS</span></label>	
 						</div>
 
@@ -245,8 +247,11 @@
 					</div>
 				</div>
                 <!-- CART SECTION -->
-                
+ </form>               
 				<input type="hidden" value="<?php echo base_url();?>" id="url">				
                 <?php $this->load->view('orders/_modal_customer_search'); ?>
-                <?php $this->load->view('orders/_modal_customer_detail'); ?>
+                <?php $this->load->view('orders/_modal_ship_search'); ?>
+                <?php $this->load->view('orders/_modal_salesman_search'); ?>
+                <?php $this->load->view('orders/_modal_ship_vias_search'); ?>
+				
         

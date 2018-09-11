@@ -256,7 +256,7 @@ class Customers extends CI_Model {
     public function getTotalFiltered($data = null){
         $response = array();
 		$this->db->select('*');
-        $this->db->from('customers as a');   
+        $this->db->from('customers as c');   
 		if($data['search']['value']!=''){
             $this->db->or_where('c.id ',$data['search']['value']);	
 			$this->db->or_like('c.name',$data['search']['value']);	
@@ -303,7 +303,7 @@ class Customers extends CI_Model {
                 break;
             }
             default:{
-                $this->db->order_by('c.id',$data['order'][0]['dir']);
+                $this->db->order_by('c.name',$data['order'][0]['dir']);
             }
         }
         //$this->db->where('a.status!= ',2);	

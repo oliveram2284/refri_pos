@@ -67,4 +67,50 @@ class Main extends CI_Controller {
 		echo json_encode($response);
 	}
 
+
+	public function find_ship(){
+		
+		$recordsTotal= $this->Customers->getTotalFiltered($_REQUEST);
+        $data= $this->Customers->getFiltered($_REQUEST);
+       
+		$response=array(
+			'draw' => $_REQUEST['draw'],
+			'recordsTotal' => $recordsTotal,
+			'recordsFiltered' => $recordsTotal,
+			'data' => $data
+		);
+
+		echo json_encode($response);
+	}
+
+	public function find_salesman(){
+		
+		$recordsTotal= $this->Salesmen->getTotalFiltered($_REQUEST);
+        $data= $this->Salesmen->getFiltered($_REQUEST);
+       
+		$response=array(
+			'draw' => $_REQUEST['draw'],
+			'recordsTotal' => $recordsTotal,
+			'recordsFiltered' => $recordsTotal,
+			'data' => $data
+		);
+
+		echo json_encode($response);
+	}
+
+	public function find_ship_vias(){
+		
+		$recordsTotal= $this->ShipVias->getTotalFiltered($_REQUEST);
+        $data= $this->ShipVias->getFiltered($_REQUEST);
+       
+		$response=array(
+			'draw' => $_REQUEST['draw'],
+			'recordsTotal' => $recordsTotal,
+			'recordsFiltered' => $recordsTotal,
+			'data' => $data
+		);
+
+		echo json_encode($response);
+	}
+
 }

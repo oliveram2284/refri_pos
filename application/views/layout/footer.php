@@ -13,7 +13,8 @@
         <script type="text/javascript" src="<?php  echo base_url();?>assets/lib/data-tables/jquery.dataTables.min.js"></script> 
         <script type="text/javascript" src="<?php  echo base_url();?>assets/lib/data-tables/dataTables.bootstrap4.min.js"></script> 
         <script type="text/javascript" src="<?php  echo base_url();?>assets/lib/data-tables/dataTables.responsive.min.js"></script> 
-        <script type="text/javascript" src="<?php  echo base_url();?>assets/lib/data-tables/responsive.bootstrap4.min.js"></script>
+        <script type="text/javascript" src="<?php  echo base_url();?>assets/lib/data-tables/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="<?php  echo base_url();?>assets/lib/data-tables/buttons.colVis.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
     </script>
