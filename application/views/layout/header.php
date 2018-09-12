@@ -19,7 +19,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php  echo base_url();?>assets/css/font-awesome/css/fontawesome-all.css" rel="stylesheet">
     <link href="<?php  echo base_url();?>assets/lib/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="<?php  echo base_url();?>assets/lib/data-tables/buttons.dataTables.min.css" rel="stylesheet">
-    <link href="<?php  echo base_url();?>assets/lib/data-tables/dataTables.buttons.min.css" rel="stylesheet">
         
 
     <!-- Custom styles for this template -->

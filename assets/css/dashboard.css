@@ -148,6 +148,11 @@ body {
     font-size: .75rem;
 }
 
+#cart_table textarea,
+#cart_table .intput_item {
+    font-size: .75rem;
+}
+
 .find_customer_datatable .table-sm td,
 .find_customer_datatable .table-sm th {
     padding: .2em;
