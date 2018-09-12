@@ -256,7 +256,8 @@ class Customers extends CI_Model {
     public function getTotalFiltered($data = null){
         $response = array();
 		$this->db->select('*');
-        $this->db->from('customers as c');   
+        $this->db->from('customers as c'); 
+        $this->db->join('salesmen as s','c.salesman_id=s.id');  
 		if($data['search']['value']!=''){
             $this->db->or_where('c.id ',$data['search']['value']);	
 			$this->db->or_like('c.name',$data['search']['value']);	
@@ -271,8 +272,9 @@ class Customers extends CI_Model {
     }
 
     public function getFiltered( $data = null){
-        $this->db->select("*");
+        $this->db->select("c.*, CONCAT(s.first_name,' ',s.last_name) as salsmen_name");
         $this->db->from('customers as c');
+        $this->db->join('salesmen as s','c.salesman_id=s.id');
         switch($data['order'][0]['column']){
             case 0:{
                 $this->db->order_by('c.id',$data['order'][0]['dir']);                

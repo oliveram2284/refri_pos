@@ -35,8 +35,8 @@
 							<label><strong>DOC#: </strong> <input type="text" id="" name=""  class="input_custom"   value="1234567890"  size="10"/></label>	
 						</div>
 						<div class="col border">
-							<label><strong>ORD: </strong> <input type="text" class="input_custom" value="9999,000.000" size="15"/> </label> 
-							<label><strong>BKO: </strong> <input type="text" class="input_custom" value="$9999,000.000" size="15"/></label>	
+							<label><strong>ORD: </strong> <input type="text" class="input_custom"  id="order_total" name="order_total" value="9999,000.000" size="15"/> </label> 
+							<label><strong>BKO: </strong> <input type="text" class="input_custom"  id="bko_total"   name="bko_total"   value="$9999,000.000" size="15"/></label>	
 						</div>
 						<div class="col col-2 border pt-2 text-right"> 
                             <button id="bt_save" type="button" class="btn btn-xs btn-success " ><i class="fas fa-save fa-sm"></i></button>
@@ -53,16 +53,23 @@
 				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2  box">
 					<div class="row border border-light">
 						<div class="col  border">
-                            <label><strong>SOLD TO: </strong> <input type="text" id="customer_id" name="customer_id"  class="input_custom"   value="" size="6"/><!--<span>123456</span>  -->
-                            <button type="button" id="bt_model_customer" class="btn btn-success btn-xs float-right "><i class="fas fa-search fa-xs"></i></button>  
-                            <button type="button" id="bt_model_detail"  class="btn btn-info btn-xs float-right mr-1"><i class="fas fa-eye fa-xs"></i></button> </label> 
-							<label><input type="text" id="customer_name" name="customer_name"  class="input_custom"  size="23" /><!--<span>ABC CORPORATION</span>--> <span class="float-right">(30)</span> </label>	
+                            <label>
+								<strong>SOLD TO: </strong> <input type="text" id="customer_id" name="customer_id"  class="input_custom"   value="" size="5"/>
+								<div class="float-right">
+									<button type="button" id="bt_clean_customer" class="btn btn-danger btn-xs "><i class="fas fa-search fa-xs"></i></button>  
+									<button type="button" id="bt_model_detail"  class="btn btn-info btn-xs "><i class="fas fa-eye fa-xs"></i></button> </label> 
+									<button type="button" id="bt_model_customer" class="btn btn-success btn-xs "><i class="fas fa-search fa-xs"></i></button>  
+								</div>
+							</label>
+							<label>
+								<input type="text" id="customer_name" name="customer_name"  class="input_custom"  size="30" /> 
+							</label>	
 						</div>
 						
 						<div class="col  border">
                             <label><strong>SHIP TO: </strong> <input type="text" id="ship_id" name="ship_id"  class="input_custom"  size="5" />  
                             <button type="button" id="bt_model_ship" class="btn btn-success btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
-							<label><strong>P/O NUM: </strong><input type="text" id="ship_customer_name" name="ship_customer_name"  class="input_custom"  size="15" /></label>	
+							<input type="text" id="ship_customer_name" name="ship_customer_name"  class="input_custom"  size="15" />	
 						</div>
 						<div class="col border"> 
                             <label><strong>SALS: </strong> <input type="text" id="salesman_id" name="salesman_id"  class="input_custom"  size="5" /><!-- <span>123</span> -->
@@ -70,8 +77,8 @@
 							<label><input type="text" id="salesman_name" name="salesman_name"  class="input_custom"  size="25" /> <!-- <span>PEDRO RODRIGUEZ</span> --> </label>
 						</div>
 						<div class="col  border">
-							<label><strong>ORDER BY: </strong> <input type="text" class="input_custom" value="PEDRO MARTINEZ" size="20"/> <span></span> </label> 
-							<label><strong>P/O NUM: </strong>  <input type="text" class="input_custom" value="12345678901234567890" size="20"/> <span></span></label>	
+							<label><strong>ORDER BY: </strong> <input type="text" class="input_custom" value="" size="20"/> <span></span> </label> 
+							<label><strong>P/O NUM: </strong>  <input type="text" class="input_custom" value="" size="20"/> <span></span></label>	
 						</div>
 
 						
@@ -98,48 +105,59 @@
 						<div class="col col-2 border">
 							<label>
 								<strong> ITEM NUMBER:</strong> 
-								<div class="float-right">								
-								
-								<button type="button" id="bt_model_search_product" class="btn btn-success btn-xs "><i class="fas fa-search fa-xs"></i></button>								
+								<div class="float-right">		
+
 								<button type="button" id="bt_info_product_form" class="btn btn-info btn-xs "><i class="fas fa-eye fa-xs"></i></button>  
-								<button type="button" id="bt_clear_product_form" class="btn btn-primary btn-xs "><i class="fas fa-times-circle fa-xs"></i></button>  
+								<button type="button" id="bt_model_search_product" class="btn btn-success btn-xs "><i class="fas fa-search fa-xs"></i></button>								
 								</div>
 							</label> 
-							<input type="text"  id="item_number" name="item_number" class="form-control input_custom " value=""/>	
+							<div>
+							<input type="text"  id="item_number" name="item_number" class=" form-control-sm input_custom " value="" /> 
+
+							</div>
 						</div>						
-						<div class="col border">
+						<div class="col col-3 border">
 							<label><strong>DESCRIPTION</strong> </label>	
-							<textarea id="item_description" class="form-control">
-								
-							</textarea>
+							<!-- 
+								<input type="text" id="item_descriptions" name="item_description " class="form-control input_custom" />
+							-->
+							<textarea type="text" id="item_description" name="item_description " class="form-control input_custom" ></textarea>
 						</div>
-						<div class="col col-1 border text-right">
+						<div class="col  border text-right">
 							<label><strong>ORDER QTY</strong> </label>	
-							<input type="number" id="order_qty" name="order_qty" class="form-control form-control-sm text-right" value="">	
+							<input type="text" min="0" value="0" step="any" id="order_qty" name="order_qty" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col col-1 border text-right">
+						<div class="col  border text-right">
 							<label><strong>SHIP QTY</strong> </label>	
-							<input type="number" id="ship_qty" name="ship_qty" class="form-control form-control-sm text-right" value="">	
+							<input type="text" id="ship_qty" name="ship_qty" class="form-control form-control-sm text-right" value="">	
 						</div> 
-						<div class="col col-1 border text-right">
+						<div class="col  border text-right">
 							<label><strong>BKO QTY</strong> </label>	
-							<input type="number" id="bko_qty" name="bko_qty" class="form-control form-control-sm text-right" value="">	
+							<input type="text" id="bko_qty" name="bko_qty" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col col-1 border text-right">
+						<div class="col  border text-right">
 							<label><strong>UNIT PRICE</strong> </label>	
-							<input type="number" id="unit_price" name="unit_price" class="form-control form-control-sm text-right" value="">	
+							<input type="text" min="0" step="0.101"  pattern="^\d+(?:\.\d{1,2})?" id="unit_price" name="unit_price" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col col-1 border text-right">
+						<div class="col  border text-right">
 							<label><strong>DISC %</strong> </label>	
-							<input type="number" id="discuount" name="discuount" class="form-control form-control-sm text-right" value="">	
+							<input type="text"  min="0" step="0.101"  pattern="^\d+(?:\.\d{1,2})?" id="discuount" name="discuount" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col col-1 border text-right">
+						<div class="col  border text-right">
 							<label><strong>EXIT PRICE</strong> </label>	
-							<input type="number" id="exit_price" name="exit_price" class="form-control form-control-sm text-right" value="">	
+							<input type="text"   min="0" step="0.101" pattern="^\d+(?:\.\d{1,2})?$" id="exit_price" name="exit_price" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col col-1 border text-center">
+						<div class="col  border text-center">
 							<label class="text-center"><strong>TX</strong> </label>	
-							<button  type="button" id="bt_add_product" class="btn btn-info btn-xs "><i class="fas fa-plus fa-xs"></i></button>
+							<label class="text-center"><input class="form-check-input" type="radio" name="tax" id="tax1" value="Y" checked>
+							Yes</label>	
+							<label class="text-center"><input class="form-check-input" type="radio" name="tax" id="tax1" value="N" checked>
+							No</label>
+						</div>
+						<div class="col col-sm border text-center">
+							<br>
+						<label class="text-center"><button  type="button" id="bt_add_product" class="btn btn-info btn-sm " col="3" row="3"><i class="fas fa-plus fa-xs"></i></button></label>
+						<label class="text-center"><button type="button" id="bt_clear_product_form" class="btn btn-danger btn-sm "><i class="fas fa-times fa-xs"></i></button> </label> 
 						</div>
 					</div>
 				</div>
@@ -147,7 +165,7 @@
 				<!-- CART SECTION -->
 				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2 border-bottom box">
 					<div class="row border border-light">
-						<table id="cart_table" class="table table-bordered table-sm table-responsive-md datatable">
+						<table id="cart_table" class="table table-sm  datatable">
 							<thead>
 								<tr>
 									<th class="text-center"> <a href="#"> << </a> <a href="#"> < </a> <a href="#"> > </a> <a href="#"> >> </a> </th>
@@ -162,89 +180,7 @@
 								</tr>
 							</thead>
 							<tbody>
-
-							<!--
-								<tr>
-									<td>
-										<button type="button" class="btn btn-xs btn-warning" disabled><i class="fas fa-eye fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-success " disabled><i class="fas fa-edit fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>
-										<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>
-									</td>
-									<td>1</td>
-									<td>1234567890123456789012345</td>
-									<td>123456789012345678901234567890</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">999,999.00</td>
-								</tr>
-								<tr>
-									<td>
-										<button type="button" class="btn btn-xs btn-warning" disabled><i class="fas fa-eye fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-success " disabled><i class="fas fa-edit fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>
-										<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>
-									</td>
-									<td>2</td>
-									<td>1234567890123456789012345</td>
-									<td>123456789012345678901234567890</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">999,999.00</td>
-								</tr>
-								<tr>
-									<td>
-										<button type="button" class="btn btn-xs btn-warning" disabled><i class="fas fa-eye fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-success " disabled><i class="fas fa-edit fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>
-										<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>
-									</td>
-									<td>3</td>
-									<td>1234567890123456789012345</td>
-									<td>123456789012345678901234567890</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">999,999.00</td>
-								</tr>
-								<tr>
-									<td>
-										<button type="button" class="btn btn-xs btn-warning" disabled><i class="fas fa-eye fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-success " disabled><i class="fas fa-edit fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>
-										<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>
-									</td>
-									<td>4</td>
-									<td>1234567890123456789012345</td>
-									<td>123456789012345678901234567890</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">999,999.00</td>
-								</tr>
-								<tr>
-									<td>
-										<button type="button" class="btn btn-xs btn-warning" disabled><i class="fas fa-eye fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-success " disabled><i class="fas fa-edit fa-sm"></i></button>
-										<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>
-										<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>
-									</td>
-									<td>5</td>
-									<td>1234567890123456789012345</td>
-									<td>123456789012345678901234567890</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">9999,999.00</td>
-									<td class="text-right">999,999.00</td>
-								</tr>
--->
+							
 							</tbody>
 						</table>
 					</div>

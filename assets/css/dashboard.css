@@ -142,3 +142,69 @@ body {
     line-height: 1.2;
     border-radius: 0.2rem;
 }
+
+.find_customer_datatable .table-sm td,
+.find_customer_datatable .table-sm th {
+    padding: .2em;
+}
+
+.custom-modal .modal-content {
+    padding: 0px;
+}
+
+.custom-modal .modal-content .modal-body {
+    padding: .2rem 0rem;
+}
+
+.custom-modal .modal-content .modal-body .container-fluid {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.custom-modal .modal-content .modal-body .dataTable .odd {
+    background-color: #fff;
+}
+
+.custom-modal .modal-content .modal-body .dataTable th,
+.custom-modal .modal-content .modal-body .dataTable .even {
+    background-color: #86c1e9;
+}
+
+.custom-modal .modal-content .modal-body div.dataTables_filter {
+    float: left;
+}
+
+#find_item_datatable th {
+    font-size: 12px;
+}
+
+#find_item_datatable td {
+    font-size: 11px;
+    padding: 0px 5px;
+}
+
+
+/*
+.custom-modal .modal-content .modal-body .dataTable th {
+    color: #4e9fd0;
+}*/
+
+.head-success {
+    background-color: #23b14d;
+    text-align: center;
+    font-weight: bold;
+    height: 50px;
+    padding: .5rem;
+}
+
+.head-success .modal-title {
+    color: #fff;
+    width: 100%;
+    font-size: 25px;
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
+        max-width: 900px !important;
+    }
+}

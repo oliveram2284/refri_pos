@@ -2,7 +2,29 @@ $(function() {
     console.log("LOAD ORDERS/ORDER_FORM");
     var url = $("#url").val();
 
-    $("#cart_table").DataTable();
+    $("#cart_table").DataTable({
+        "searching": false,
+        "lengthChange": false,
+        "pageLength": 5,
+        "lengthMenu": [
+            [5, 10, 20, 50, 100, -1],
+            [5, 10, 20, 50, 100, 'Todos']
+        ],
+        "info": false,
+        //"autoWidth": true,
+        "responsive": true,
+        "pagingType": "simple_numbers",
+        "columnDefs": [
+            { "targets": [0, 1], "className": 'text-center', },
+
+            // { "targets": [2, 3, 4, 5, 6, 7, 8, 9], "className": 'text-right', },
+        ],
+        "order": [
+            [1, "desc"]
+        ]
+
+
+    });
     var data_table_options = {
         'pageLength': 10,
         'responsive': true,
@@ -16,16 +38,12 @@ $(function() {
         "autoWidth": true,
         "responsive": true,
         "pagingType": "simple_numbers",
-        "dom": '<"top float-left col col-md-8" f> <"top float-right col col-md-4"p>t<"bottom float-left col col-md-6"l><"bottom float-right col col-md-6"p>',
+        "dom": '<"top float-left col col-md-6 text-left" f> <"top float-right col col-md-6"p>t<"bottom float-left col col-md-6"l><"bottom float-right col col-md-6"p>',
         "columnDefs": [{
-                targets: 1,
-                className: 'noVis'
-            }
-            /*{ "className": "text-left fcol", "targets": [1] },
-            { "className": "text-right", "targets": [7] },
-            { "targets": [8], "visible": false },
-            { "className": "text-center", "targets": "_all" },*/
-        ],
+            targets: 1,
+            className: 'noVis',
+
+        }, ],
         buttons: [{
             extend: 'colvis',
             columns: ':not(.noVis)'
@@ -41,7 +59,7 @@ $(function() {
                     //console.log(index);
                     //console.log(item);
                     var col0, col1, col2, col3, col4, col5, col6 = '';
-                    col0 = '<button class="btn btn-success btn-sm" id="customer_id"  data-id="' + item.id + '" data-name="' + item.name + '" > SELECT </button>';
+                    col0 = '<button class="btn btn-success btn-xs btn-block" id="customer_id"  data-id="' + item.id + '" data-name="' + item.name + '" > SELECT </button>';
                     col1 = item.id;
                     col2 = item.name;
                     col3 = item.city;
@@ -57,17 +75,6 @@ $(function() {
                 console.debug(error);
             }
         },
-        /*
-        createdRow: function(row, data, dataIndex) {
-            console.debug("===> row: %o", row);
-            console.debug("===> data: %o", data[8]);
-            console.debug("===> dataIndex: %o", dataIndex);
-            if (data[8] !== undefined && data[8] == 3) {
-                $(row).addClass('table-danger');
-            }
-            // Set the data-status attribute, and add a class
-
-        },*/
     };
 
 
@@ -85,7 +92,7 @@ $(function() {
                 //console.log(index);
                 //console.log(item);
                 var col0, col1, col2, col3, col4, col5, col6 = '';
-                col0 = '<button class="btn btn-success btn-sm" id="customer_id"  data-id="' + item.id + '" data-name="' + item.name + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="customer_id"  data-id="' + item.id + '" data-name="' + item.name + '" data-sales_id="' + item.salesman_id + '"  data-salsmen_name="' + item.salsmen_name + '"> SELECT </button>';
                 col1 = item.id;
                 col2 = item.name;
                 col3 = item.city;
@@ -109,6 +116,8 @@ $(function() {
         var data = $(this).data();
         $("form").find("#customer_id").val(data.id);
         $("form").find("#customer_name").val(data.name);
+        $("form").find('#salesman_id').val(data.sales_id);
+        $("form").find('#salesman_name').val(data.salsmen_name);
         $("#modal_search_customer").find('#find_customer_datatable').DataTable().destroy();
         $("#modal_search_customer").modal("hide");
         return false;
@@ -133,7 +142,7 @@ $(function() {
                 //console.log(index);
                 //console.log(item);
                 var col0, col1, col2, col3, col4, col5, col6 = '';
-                col0 = '<button class="btn btn-success btn-sm" id="ship_to"  data-id="' + item.id + '" data-name="' + item.customer_name + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="ship_to"  data-id="' + item.id + '" data-name="' + item.customer_name + '" > SELECT </button>';
                 col1 = item.ship_loc;
                 col2 = item.customer_name;
                 col3 = item.city;
@@ -173,7 +182,7 @@ $(function() {
                 //console.log(index);
                 //console.log(item);
                 var col0, col1, col2, col3, col4, col5, col6 = '';
-                col0 = '<button class="btn btn-success btn-sm" id="salesman_id"  data-id="' + item.id + '" data-name="' + item.first_name + " " + item.last_name + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="salesman_id"  data-id="' + item.id + '" data-name="' + item.first_name + " " + item.last_name + '" > SELECT </button>';
                 col1 = item.id;
                 col2 = item.first_name + " " + item.last_name;
                 col3 = item.location_code;
@@ -211,7 +220,7 @@ $(function() {
                 //console.log(index);
                 //console.log(item);
                 var col0, col1, col2, col3 = '';
-                col0 = '<button class="btn btn-success btn-sm" id="shipvia_id"  data-id="' + item.id + '" data-description="' + item.description + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="shipvia_id"  data-id="' + item.id + '" data-description="' + item.description + '" > SELECT </button>';
                 col1 = item.id;
                 col2 = item.description;
                 col3 = item.notes;
@@ -245,7 +254,7 @@ $(function() {
                 //console.log(index);
                 //console.log(item);
                 var col0, col1, col2, col3 = '';
-                col0 = '<button class="btn btn-success btn-sm" id="term_id"  data-id="' + item.id + '" data-description="' + item.description + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="term_id"  data-id="' + item.id + '" data-description="' + item.description + '" > SELECT </button>';
                 col1 = item.id;
                 col2 = item.description;
                 col3 = item.notes;
@@ -280,9 +289,9 @@ $(function() {
                 //console.log(index);
                 //console.log(item);
                 var col0, col1, col2, col3 = '';
-                col0 = '<button class="btn btn-success btn-sm" id="item_id"  data-id="' + item.item_id + '" data-description="' + item.description1 + "\n" + item.description2 + "\n" + item.description3 + '" data-unit_price="' + item.price1 + '" data-disc1="' + item.disc1 + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="item_id"  data-id="' + item.item_id + '" data-description="' + item.description1 + "\n" + item.description2 + "\n" + item.description3 + '" data-unit_price="' + item.price1 + '" data-disc1="' + item.disc1 + '" > SELECT </button>';
                 col1 = item.item_id;
-                col2 = item.description1 + "<br>" + item.description2 + "<br>" + item.description3;
+                col2 = item.description1 + " " + item.description2 + " " + item.description3;
                 col3 = item.vendor_id;
                 col4 = item.vendor_part;
                 col5 = item.department_id;
@@ -300,12 +309,15 @@ $(function() {
 
     $(document).on('click', '#modal_search_item #item_id', function() {
         console.debug("#modal_search_item #item_id");
+
         var data = $(this).data();
         console.debug("data: %o", data);
+        console.debug("data: %o", data.description);
         $("form").find("#item_number").val(data.id);
         $("form").find("#item_description").val(data.description);
         $("form").find("#unit_price").val(data.unit_price);
         $("form").find("#discuount").val(data.disc1);
+        $("form").find("#order_qty").focus();
         $("#modal_search_item").find('#find_item_datatable').DataTable().destroy();
         $("#modal_search_item").modal("hide");
         return false;
@@ -313,75 +325,47 @@ $(function() {
 
     $("#bt_info_product_form").click(function() {
         return false;
-        //alert("SOON");
     });
 
 
     $("#bt_clear_product_form").click(function() {
         console.debug("===> bt_clear_product_form");
         $("#item_section").find("input").val(null);
-        // $("#bt_clear_product_form").modal("show");
     });
+
+    //FORM INPUT SECTION
+    //$("#item_number #order_qty").change
+
+    function calc_or_total() {
+
+    }
 
     $("#bt_add_product").click(function() {
         console.debug("===> bt_add_product");
+        if ($("#item_number").val() == '') {
+            return false;
+        }
+        var i = $("#cart_table").DataTable().rows().count() + 1;
+        var col0, col1, col2, col3, col4, col5, col6, col7, col8 = '';
 
-        //var inputs = $("#item_section").find("input,textarea");
-        output = '';
-        output += '<tr>';
-        output += '<td>' +
+        col0 =
             '<button type="button" class="btn btn-xs btn-warning" disabled><i class="fas fa-eye fa-sm"></i></button>' +
             '<button type="button" class="btn btn-xs btn-success " disabled><i class="fas fa-edit fa-sm"></i></button>' +
             '<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>' +
-            '<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>' +
-            '</td>';
+            '<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
+        col1 = i;
+        col2 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:200px">';
+        //col3 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" value="' + $("#item_description").val() + '">';
+        col3 = '<textarea type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" style="width: 350px;" >' + $("#item_description").val() + '</textarea>';
+        col4 = '<input type="text" id="item' + i + '" name="items[order_qty]" class="form-control form-control-sm text-right" value="' + $("#order_qty").val() + '">';
+        col5 = '<input type="text" id="item' + i + '" name="items[ship_qty]" class="form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '">';
+        col6 = '<input type="text" id="item' + i + '" name="items[bko_qty]" class="form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '">';
+        col7 = '<input type="text" id="item' + i + '" name="items[unit_price]" class="form-control form-control-sm text-right" value="' + $("#unit_price").val() + '">';
+        col8 = '<input type="text" id="item' + i + '" name="items[exit_price]" class="form-control form-control-sm text-right" value="' + $("#exit_price").val() + '">';
 
-        i = 0;
-        output += '<td>';
-        output += '<input type="number" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" value="' + $("#item_number").val() + '">';
-        output += '</td>';
+        $("#item_section").find("input,textarea").val(null);
 
-        output += '<td>';
-        output += '<textarea type="number" id="item' + i + '" name="items[item_description]" class="form-control form-control-sm" value="">' + $("#item_description").val() + '</textarea>';
-        output += '</td>';
-
-        output += '<td>';
-        output += '<input type="number" id="item' + i + '" name="items[order_qty]" class="form-control form-control-sm" value="' + $("#order_qty").val() + '">';
-        output += '</td>';
-
-        output += '<td>';
-        output += '<input type="number" id="item' + i + '" name="items[ship_qty]" class="form-control form-control-sm" value="' + $("#ship_qty").val() + '">';
-        output += '</td>';
-
-        output += '<td>';
-        output += '<input type="number" id="item' + i + '" name="items[unit_price]" class="form-control form-control-sm" value="' + $("#unit_price").val() + '">';
-        output += '</td>';
-
-        output += '<td>';
-        output += '<input type="number" id="item' + i + '" name="items[bko_qty]" class="form-control form-control-sm" value="' + $("#bko_qty").val() + '">';
-        output += '</td>';
-
-        output += '<td>';
-        output += '<input type="number" id="item' + i + '" name="items[discuount]" class="form-control form-control-sm" value="' + $("#discuount").val() + '">';
-        output += '</td>';
-
-        output += '<td>';
-        output += '<input type="number" id="item' + i + '" name="items[exit_price]" class="form-control form-control-sm" value="' + $("#exit_price").val() + '">';
-        output += '</td>';
-
-        /*$.each(inputs, function(i, item) {
-            console.debug("===> INPUT[%o]: %o", i, $(item).val());
-            output += '<td>';
-            output += '<input type="number" id="items' + i + '" name="items[]" class="form-control form-control-sm" value="' + $(item).val() + '">';
-            output += '</td>';
-            //$output += '';
-        });*/
-        output += '</tr>';
-        console.debug(output);
-        $("#cart_table").find("tbody").append(output);
-        //console.log($output);
-        // $("#bt_clear_product_form").modal("show");
-        $("#cart_table").DataTable.draw();
+        $("#cart_table").DataTable().row.add([col0, col1, col2, col3, col4, col5, col6, col7, col8]).draw();
     });
 
 
