@@ -143,6 +143,11 @@ body {
     border-radius: 0.2rem;
 }
 
+#item_section #item_number,
+#item_section textarea {
+    font-size: .75rem;
+}
+
 .find_customer_datatable .table-sm td,
 .find_customer_datatable .table-sm th {
     padding: .2em;

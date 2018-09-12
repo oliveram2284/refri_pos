@@ -117,40 +117,50 @@ class Customer_Ship_Tos extends CI_Model {
 
 
 
-    public function getTotalFiltered($data = null){
+    public function getTotalFiltered($id=null,$data = null){
+
+        if($id){
+            $data['search']['value']=$id;
+        }
         $response = array();
 		$this->db->select('*');
         $this->db->from('customer_shiptos as cs');   
 		if($data['search']['value']!=''){
-            $this->db->or_where('cs.id ',$data['search']['value']);	
-			$this->db->or_like('cs.name',$data['search']['value']);	
-			$this->db->or_like('cs.city',$data['search']['value']);	
+            $this->db->or_where('cs.ship_loc',$data['search']['value']);	
+			$this->db->or_like('cs.customer_id',$data['search']['value']);	
+			$this->db->or_like('cs.address1',$data['search']['value']);
 			$this->db->or_like('cs.state',$data['search']['value']);	
 			$this->db->or_like('cs.zip_code',$data['search']['value']);	
-			$this->db->or_like('cs.mainph',$data['search']['value']);	
-		}		
+			$this->db->or_like('cs.country',$data['search']['value']);	
+       }	
         $query = $this->db->get();        
 		return $query->num_rows();
     }
 
-    public function getFiltered( $data = null){
+    public function getFiltered( $id=null,$data = null){
+
+
+        if($id){
+            $data['search']['value']=$id;
+        }
+
         $this->db->select("*");
         $this->db->from('customer_shiptos as cs');
         switch($data['order'][0]['column']){
             case 0:{
-                $this->db->order_by('cs.id',$data['order'][0]['dir']);                
+                $this->db->order_by('cs.ship_loc',$data['order'][0]['dir']);                
                 break;
             }
             case 1:{
-                $this->db->order_by('cs.id',$data['order'][0]['dir']);  
+                $this->db->order_by('cs.ship_loc',$data['order'][0]['dir']);  
                 break;
             }
             case 2:{
-                $this->db->order_by('cs.name',$data['order'][0]['dir']);                  
+                $this->db->order_by('cs.customer_id',$data['order'][0]['dir']);                  
                 break;
             }
             case 3:{
-                $this->db->order_by('cs.city',$data['order'][0]['dir']);                  
+                $this->db->order_by('cs.address1',$data['order'][0]['dir']);                  
                 break;
             }
             case 4:{
@@ -162,21 +172,21 @@ class Customer_Ship_Tos extends CI_Model {
                 break;
             }
             case 5:{
-                $this->db->order_by('cs.mainph',$data['order'][0]['dir']);                  
+                $this->db->order_by('cs.country',$data['order'][0]['dir']);                  
                 break;
             }
             default:{
-                $this->db->order_by('cs.name',$data['order'][0]['dir']);
+                $this->db->order_by('cs.ship_loc',$data['order'][0]['dir']);
             }
         }
         //$this->db->where('a.status!= ',2);	
 		if($data['search']['value']!=''){
-            $this->db->or_where('cs.id ',$data['search']['value']);	
-			$this->db->or_like('cs.name',$data['search']['value']);	
-			$this->db->or_like('cs.city',$data['search']['value']);	
+            $this->db->or_where('cs.ship_loc',$data['search']['value']);	
+			$this->db->or_like('cs.customer_id',$data['search']['value']);	
+			$this->db->or_like('cs.address1',$data['search']['value']);
 			$this->db->or_like('cs.state',$data['search']['value']);	
 			$this->db->or_like('cs.zip_code',$data['search']['value']);	
-			$this->db->or_like('cs.mainph',$data['search']['value']);	
+			$this->db->or_like('cs.country',$data['search']['value']);	
             //$this->db->or_like('DATE_FORMAT(a.date_added, "%d-%m-%Y %H:%i")',$data['search']['value']);
 		}
 		$this->db->limit($data['length'],$data['start']);

@@ -2,7 +2,7 @@
 <form id="order_form">
 				<!-- SALESMAN SECTION -->
                 <div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-2 mb-3  box">
-					<div class="row border border-light">
+					<div id="section_seler" class="row border border-light" >
 						
 						<div class="col border "> 
 							<label><strong>OPR: </strong> <input type="text" id="operador_name-input"  class="control-form input_custom" value="<?php echo $operator['first_name']." ".$operator['last_name']?>" size="20" /></label> 
@@ -35,8 +35,8 @@
 							<label><strong>DOC#: </strong> <input type="text" id="" name=""  class="input_custom"   value="1234567890"  size="10"/></label>	
 						</div>
 						<div class="col border">
-							<label><strong>ORD: </strong> <input type="text" class="input_custom"  id="order_total" name="order_total" value="9999,000.000" size="15"/> </label> 
-							<label><strong>BKO: </strong> <input type="text" class="input_custom"  id="bko_total"   name="bko_total"   value="$9999,000.000" size="15"/></label>	
+							<label><strong>ORD: </strong> <input type="text" class="input_custom"  id="order_total" name="order_total" value="" size="15"/> </label> 
+							<label><strong>BKO: </strong> <input type="text" class="input_custom"  id="bko_total"   name="bko_total"   value="" size="15"/></label>	
 						</div>
 						<div class="col col-2 border pt-2 text-right"> 
                             <button id="bt_save" type="button" class="btn btn-xs btn-success " ><i class="fas fa-save fa-sm"></i></button>
@@ -56,25 +56,25 @@
                             <label>
 								<strong>SOLD TO: </strong> <input type="text" id="customer_id" name="customer_id"  class="input_custom"   value="" size="5"/>
 								<div class="float-right">
-									<button type="button" id="bt_clean_customer" class="btn btn-danger btn-xs "><i class="fas fa-search fa-xs"></i></button>  
+									<button type="button" id="bt_clean_customer" class="btn btn-danger btn-xs "><i class="fas fa-times fa-xs"></i></button>  
 									<button type="button" id="bt_model_detail"  class="btn btn-info btn-xs "><i class="fas fa-eye fa-xs"></i></button> </label> 
 									<button type="button" id="bt_model_customer" class="btn btn-success btn-xs "><i class="fas fa-search fa-xs"></i></button>  
 								</div>
 							</label>
 							<label>
-								<input type="text" id="customer_name" name="customer_name"  class="input_custom"  size="30" /> 
+								<input type="text" id="customer_name" name="customer_name"  class="input_custom" style="width:100%;" /> 
 							</label>	
 						</div>
 						
 						<div class="col  border">
                             <label><strong>SHIP TO: </strong> <input type="text" id="ship_id" name="ship_id"  class="input_custom"  size="5" />  
                             <button type="button" id="bt_model_ship" class="btn btn-success btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
-							<input type="text" id="ship_customer_name" name="ship_customer_name"  class="input_custom"  size="15" />	
+							<input type="text" id="ship_customer_name" name="ship_customer_name"  class="input_custom" style="width:100%;" />	
 						</div>
 						<div class="col border"> 
                             <label><strong>SALS: </strong> <input type="text" id="salesman_id" name="salesman_id"  class="input_custom"  size="5" /><!-- <span>123</span> -->
                             <button type="button" id="bt_model_sales" class="btn btn-info btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
-							<label><input type="text" id="salesman_name" name="salesman_name"  class="input_custom"  size="25" /> <!-- <span>PEDRO RODRIGUEZ</span> --> </label>
+							<label><input type="text" id="salesman_name" name="salesman_name"  class="input_custom" style="width:100%;" /> <!-- <span>PEDRO RODRIGUEZ</span> --> </label>
 						</div>
 						<div class="col  border">
 							<label><strong>ORDER BY: </strong> <input type="text" class="input_custom" value="" size="20"/> <span></span> </label> 
@@ -86,12 +86,12 @@
 						<div class="col  border">
                             <label><strong>SHIP VIA: </strong>  <input type="text" id="ship_via_id" name="ship_via_id"  class="input_custom"  size="5" /> <!--<span>123456</span>--> 
                             <button type="button"  id="bt_model_ship_via" class="btn btn-success btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
-							<label><input type="text" id="ship_via_description" name="ship_via_description"  class="input_custom" value="" size="20"/> <!--<span>FEDEX NEXT DAY 10AM</span> --></label>	
+							<label><input type="text" id="ship_via_description" name="ship_via_description"  class="input_custom" value="" style="width:100%;"/> <!--<span>FEDEX NEXT DAY 10AM</span> --></label>	
 						</div>
 						<div class="col  border">
                             <label><strong>TERMS: </strong><input type="text" id="term_id" name="term_id" class="input_custom" value="" size="6"/> 
                             <button type="button" id="bt_model_terms" class="btn btn-success btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
-							<label> <input type="text"  id="term_description" name="term_description" class="input_custom" value="" size="20"/> <!-- span>NET 30 2% 10 DAYS</span> --></label>	
+							<label> <input type="text"  id="term_description" name="term_description" class="input_custom" value="" style="width:100%;"/> <!-- span>NET 30 2% 10 DAYS</span> --></label>	
 						</div>
 
 					</div>
@@ -112,7 +112,7 @@
 								</div>
 							</label> 
 							<div>
-							<input type="text"  id="item_number" name="item_number" class=" form-control-sm input_custom " value="" /> 
+							<input type="text"  id="item_number" name="item_number" class=" form-control input_custom " value="" /> 
 
 							</div>
 						</div>						
@@ -144,7 +144,7 @@
 							<input type="text"  min="0" step="0.101"  pattern="^\d+(?:\.\d{1,2})?" id="discuount" name="discuount" class="form-control form-control-sm text-right" value="">	
 						</div>
 						<div class="col  border text-right">
-							<label><strong>EXIT PRICE</strong> </label>	
+							<label><strong>EXT PRICE</strong> </label>	
 							<input type="text"   min="0" step="0.101" pattern="^\d+(?:\.\d{1,2})?$" id="exit_price" name="exit_price" class="form-control form-control-sm text-right" value="">	
 						</div>
 						<div class="col  border text-center">

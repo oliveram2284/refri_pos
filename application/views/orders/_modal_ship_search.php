@@ -14,7 +14,7 @@
               <tr class="table-info">
                 <th>SELECT</th>
                 <th>SHIP LOC</th>
-                <th>CUSTOMER NAME</th>
+                <th>ADDRESS1</th>
                 <th>STATE</th>
                 <th>ZIP</th>
                 <th>COUNTRY</th>
@@ -26,7 +26,7 @@
               <tr class="table-info">
                 <th>SELECT</th>
                 <th>SHIP LOC</th>
-                <th>CUSTOMER NAME</th>
+                <th>ADDRESS1</th>
                 <th>STATE</th>
                 <th>ZIP</th>
                 <th>COUNTRY</th>

@@ -11,13 +11,10 @@ $(function() {
             [5, 10, 20, 50, 100, 'Todos']
         ],
         "info": false,
-        //"autoWidth": true,
         "responsive": true,
         "pagingType": "simple_numbers",
         "columnDefs": [
             { "targets": [0, 1], "className": 'text-center', },
-
-            // { "targets": [2, 3, 4, 5, 6, 7, 8, 9], "className": 'text-right', },
         ],
         "order": [
             [1, "desc"]
@@ -56,8 +53,6 @@ $(function() {
                 //console.log(response);
                 var output = [];
                 $.each(response.data, function(index, item) {
-                    //console.log(index);
-                    //console.log(item);
                     var col0, col1, col2, col3, col4, col5, col6 = '';
                     col0 = '<button class="btn btn-success btn-xs btn-block" id="customer_id"  data-id="' + item.id + '" data-name="' + item.name + '" > SELECT </button>';
                     col1 = item.id;
@@ -79,18 +74,13 @@ $(function() {
 
 
 
-    //$('#find_ship_datatable').DataTable(data_table_options); 
-
     $("#bt_model_customer").click(function() {
         console.debug("===> bt_model_customer");
         data_table_options.ajax.url = url + 'main/find_customers';
         data_table_options.ajax.dataSrc = function(response) {
 
-            //console.log(response);
             var output = [];
             $.each(response.data, function(index, item) {
-                //console.log(index);
-                //console.log(item);
                 var col0, col1, col2, col3, col4, col5, col6 = '';
                 col0 = '<button class="btn btn-success btn-xs btn-block" id="customer_id"  data-id="' + item.id + '" data-name="' + item.name + '" data-sales_id="' + item.salesman_id + '"  data-salsmen_name="' + item.salsmen_name + '"> SELECT </button>';
                 col1 = item.id;
@@ -110,6 +100,12 @@ $(function() {
     });
 
 
+    $("#bt_clean_customer").click(function() {
+        console.debug("===> bt_clean_customer");
+
+        $("form").find("#customer_id").val(null);
+        $("form").find("#customer_name").val(null);
+    });
 
     $(document).on('click', '#modal_search_customer #customer_id', function() {
         console.debug("#modal_search_customer #customer_id");
@@ -125,16 +121,64 @@ $(function() {
 
 
 
+    $(document).on('change', '#item_section #order_qty', function() {
+        $('#item_section #ship_qty').val($(this).val()).trigger('change');
+    });
+
+    $(document).on('change', '#item_section #ship_qty', function() {
+        $('#item_section #ship_qty').val($(this).val());
+        var ship_qty = $(this).val();
+        var unit_price = ($("#item_section #unit_price").val() != '' && $("#item_section #unit_price").val() != 0) ? $("#item_section #unit_price").val() : 0;
+        var ext_price = 0;
+
+        if (ship_qty != '') {
+            ext_price = ship_qty * parseFloat(unit_price);
+        }
+
+        $('#item_section #exit_price').val(ext_price.toFixed(2));
+
+        calc_or_totals();
+
+    });
+
+    $(document).on('change', '#item_section #bko_qty', function() {
+        var bko_qty = ($(this).val() != '' || $(this).val() != 0) ? $(this).val() : 0;
+
+        if (bko_qty == 0) {
+            $('#item_section #ship_qty').val($('#item_section #order_qty').val());
+        } else {
+            var new_ship_qty = ($(this).val() == 0) ? 0 : $('#item_section #order_qty').val() - $(this).val();
+            console.log(new_ship_qty);
+            $('#item_section #ship_qty').val(new_ship_qty).trigger('change');
+        }
+
+    });
+
+    $(document).on('change', '#item_section #discuount', function() {
+
+        var percent = ($(this).val() != '') ? (100 - $(this).val()) : 100;
+        var ship_qty = $("#item_section #ship_qty").val();
+        var unit_price = ($("#item_section #unit_price").val() != '' && $("#item_section #unit_price").val() != 0) ? $("#item_section #unit_price").val() : 0;
+        var ext_price = 0;
+
+        if (ship_qty != '') {
+            ext_price = ship_qty * parseFloat(unit_price) * (percent / 100);
+        }
+        $('#item_section #exit_price').val(ext_price.toFixed(2));
+    });
+
+
     $("#bt_model_detail").click(function() {
         console.debug("===> bt_model_detail");
-        //$("#modal_search_de").modal("show");
     })
 
     $("#bt_model_ship").click(function() {
         console.debug("===> bt_model_ship");
+        $("#modal_search_ship").find('#find_ship_datatable').DataTable().destroy();
+        var customer_id = $("#customer_id").val();
 
-        console.log(data_table_options.ajax.url);
-        data_table_options.ajax.url = url + 'main/find_ship';
+        data_table_options.ajax.url = url + 'main/find_ship/' + customer_id;
+
         data_table_options.ajax.dataSrc = function(response) {
             //console.log(response);
             var output = [];
@@ -142,9 +186,9 @@ $(function() {
                 //console.log(index);
                 //console.log(item);
                 var col0, col1, col2, col3, col4, col5, col6 = '';
-                col0 = '<button class="btn btn-success btn-xs btn-block" id="ship_to"  data-id="' + item.id + '" data-name="' + item.customer_name + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="ship_to"  data-id="' + item.ship_loc + '" data-name="' + item.address1 + '" > SELECT </button>';
                 col1 = item.ship_loc;
-                col2 = item.customer_name;
+                col2 = item.address1;
                 col3 = item.city;
                 col4 = item.state;
                 col5 = item.zip_code;
@@ -154,8 +198,6 @@ $(function() {
             });
             return output;
         };
-        console.log(data_table_options.ajax.url);
-        console.log(data_table_options.ajax.dataSrc);
         $('#find_ship_datatable').DataTable(data_table_options);
         $("#modal_search_ship").modal("show");
     });
@@ -214,17 +256,13 @@ $(function() {
         console.debug("===> bt_model_ship_via");
         data_table_options.ajax.url = url + 'main/find_ship_vias';
         data_table_options.ajax.dataSrc = function(response) {
-            //console.log(response);
             var output = [];
             $.each(response.data, function(index, item) {
-                //console.log(index);
-                //console.log(item);
                 var col0, col1, col2, col3 = '';
                 col0 = '<button class="btn btn-success btn-xs btn-block" id="shipvia_id"  data-id="' + item.id + '" data-description="' + item.description + '" > SELECT </button>';
                 col1 = item.id;
                 col2 = item.description;
                 col3 = item.notes;
-
                 output.push([col0, col1, col2, col3]);
             });
             return output;
@@ -236,7 +274,6 @@ $(function() {
     $(document).on('click', '#modal_search_ship_vias #shipvia_id', function() {
         console.debug("#modal_search_ship_vias #shipvia_id");
         var data = $(this).data();
-        console.debug("data: %o", data);
         $("form").find("#ship_via_id").val(data.id);
         $("form").find("#ship_via_description").val(data.description);
         $("#modal_search_ship_vias").find('#find_ship_vias_datatable').DataTable().destroy();
@@ -248,11 +285,8 @@ $(function() {
         console.debug("===> bt_model_terms");
         data_table_options.ajax.url = url + 'main/find_terms';
         data_table_options.ajax.dataSrc = function(response) {
-            //console.log(response);
             var output = [];
             $.each(response.data, function(index, item) {
-                //console.log(index);
-                //console.log(item);
                 var col0, col1, col2, col3 = '';
                 col0 = '<button class="btn btn-success btn-xs btn-block" id="term_id"  data-id="' + item.id + '" data-description="' + item.description + '" > SELECT </button>';
                 col1 = item.id;
@@ -283,11 +317,8 @@ $(function() {
 
         data_table_options.ajax.url = url + 'main/find_items';
         data_table_options.ajax.dataSrc = function(response) {
-            //console.log(response);
             var output = [];
             $.each(response.data, function(index, item) {
-                //console.log(index);
-                //console.log(item);
                 var col0, col1, col2, col3 = '';
                 col0 = '<button class="btn btn-success btn-xs btn-block" id="item_id"  data-id="' + item.item_id + '" data-description="' + item.description1 + "\n" + item.description2 + "\n" + item.description3 + '" data-unit_price="' + item.price1 + '" data-disc1="' + item.disc1 + '" > SELECT </button>';
                 col1 = item.item_id;
@@ -336,7 +367,18 @@ $(function() {
     //FORM INPUT SECTION
     //$("#item_number #order_qty").change
 
-    function calc_or_total() {
+    function calc_or_totals() {
+
+        var or_total = ($("#order_total").val().length > 0) ? parseFloat($("#order_total").val()) : 0;
+        var bko_total = ($("#order_total").val().length > 0) ? parseFloat($("#order_total").val()) : 0;
+        var ship_qty = $("#item_section #ship_qty").val();
+        var bko_qty = $("#item_section #bko_qty").val();
+        var unit_price = ($("#item_section #unit_price").val() != '' && $("#item_section #unit_price").val() != 0) ? $("#item_section #unit_price").val() : 0;
+
+        or_total = parseFloat(ship_qty * unit_price);
+        bko_total = parseFloat(bko_qty * unit_price);
+        $("#order_total").val("$ " + or_total.toFixed(2));
+        $("#bko_total").val("$ " + bko_total.toFixed(2));
 
     }
 
@@ -354,18 +396,23 @@ $(function() {
             '<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>' +
             '<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
         col1 = i;
-        col2 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:200px">';
+        col2 = '<input type="text" id="item_1_' + i + '" name="items[item_number]" class="form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:200px">';
         //col3 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" value="' + $("#item_description").val() + '">';
-        col3 = '<textarea type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" style="width: 350px;" >' + $("#item_description").val() + '</textarea>';
-        col4 = '<input type="text" id="item' + i + '" name="items[order_qty]" class="form-control form-control-sm text-right" value="' + $("#order_qty").val() + '">';
-        col5 = '<input type="text" id="item' + i + '" name="items[ship_qty]" class="form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '">';
-        col6 = '<input type="text" id="item' + i + '" name="items[bko_qty]" class="form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '">';
-        col7 = '<input type="text" id="item' + i + '" name="items[unit_price]" class="form-control form-control-sm text-right" value="' + $("#unit_price").val() + '">';
-        col8 = '<input type="text" id="item' + i + '" name="items[exit_price]" class="form-control form-control-sm text-right" value="' + $("#exit_price").val() + '">';
+        col3 = '<textarea type="text" id="item_2_' + i + '" name="items[item_number]" class="form-control form-control-sm" style="width: 350px;" >' + $("#item_description").val() + '</textarea>';
+        col4 = '<input type="text" id="item_3_' + i + '" name="items[order_qty]" class="form-control form-control-sm text-right" value="' + $("#order_qty").val() + '">';
+        col5 = '<input type="text" id="item_4_' + i + '" name="items[ship_qty]" class="form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '">';
+        col6 = '<input type="text" id="item_5_' + i + '" name="items[bko_qty]" class="form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '">';
+        col7 = '<input type="text" id="item_6_' + i + '" name="items[unit_price]" class="form-control form-control-sm text-right" value="' + $("#unit_price").val() + '">';
+        col8 = '<input type="text" id="item_7_' + i + '" name="items[exit_price]" class="form-control form-control-sm text-right" value="' + $("#exit_price").val() + '">';
 
         $("#item_section").find("input,textarea").val(null);
 
         $("#cart_table").DataTable().row.add([col0, col1, col2, col3, col4, col5, col6, col7, col8]).draw();
+
+        calc_or_totals();
+
+        $("#order_total").val(null);
+        $("#bko_total").val(null);
     });
 
 

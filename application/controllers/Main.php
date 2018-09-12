@@ -69,10 +69,10 @@ class Main extends CI_Controller {
 	}
 
 
-	public function find_ship(){
+	public function find_ship($id=null){
+		$recordsTotal= $this->Customer_Ship_Tos->getTotalFiltered($id,$_REQUEST);
+			$data= $this->Customer_Ship_Tos->getFiltered($id,$_REQUEST);
 		
-		$recordsTotal= $this->Customer_Ship_Tos->getTotalFiltered($_REQUEST);
-        $data= $this->Customer_Ship_Tos->getFiltered($_REQUEST);
        
 		$response=array(
 			'draw' => $_REQUEST['draw'],
