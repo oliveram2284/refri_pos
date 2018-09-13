@@ -151,6 +151,7 @@ body {
 #cart_table textarea,
 #cart_table .intput_item {
     font-size: .75rem;
+    overflow: hidden
 }
 
 .find_customer_datatable .table-sm td,
@@ -211,6 +212,11 @@ body {
     color: #fff;
     width: 100%;
     font-size: 25px;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #fff;
 }
 
 @media (min-width: 992px) {

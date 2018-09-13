@@ -106,7 +106,7 @@
 							<label>
 								<strong> ITEM NUMBER:</strong> 
 								<div class="float-right">		
-
+								<button type="button" id="bt_clear_product_form1" class="btn btn-danger btn-xs "><i class="fas fa-times fa-xs"></i></button>
 								<button type="button" id="bt_info_product_form" class="btn btn-info btn-xs "><i class="fas fa-eye fa-xs"></i></button>  
 								<button type="button" id="bt_model_search_product" class="btn btn-success btn-xs "><i class="fas fa-search fa-xs"></i></button>								
 								</div>
@@ -145,7 +145,7 @@
 						</div>
 						<div class="col  border text-right">
 							<label><strong>EXT PRICE</strong> </label>	
-							<input type="text"   min="0" step="0.101" pattern="^\d+(?:\.\d{1,2})?$" id="exit_price" name="exit_price" class="form-control form-control-sm text-right" value="">	
+							<input type="text"   min="0" step="0.101" pattern="^\d+(?:\.\d{1,2})?$" id="exit_price" name="exit_price" class="form-control form-control-sm text-right" disabled>	
 						</div>
 						<div class="col  border text-center">
 							<label class="text-center"><strong>TX</strong> </label>	
@@ -156,8 +156,9 @@
 						</div>
 						<div class="col col-sm border text-center">
 							<br>
-						<label class="text-center"><button  type="button" id="bt_add_product" class="btn btn-info btn-sm " col="3" row="3"><i class="fas fa-plus fa-xs"></i></button></label>
-						<label class="text-center"><button type="button" id="bt_clear_product_form" class="btn btn-danger btn-sm "><i class="fas fa-times fa-xs"></i></button> </label> 
+						<label class="text-center">
+							<button  type="button" id="bt_add_product" class="btn btn-info btn-xs " col="3" row="3"><i class="fas fa-plus fa-xs"></i></button>						
+							<button type="button" id="bt_clear_product_form2" class="btn btn-danger btn-xs "><i class="fas fa-times fa-xs"></i></button> </label> 
 						</div>
 					</div>
 				</div>
@@ -168,7 +169,7 @@
 						<table id="cart_table" class="table table-sm  datatable">
 							<thead>
 								<tr>
-									<th class="text-center"> <a href="#"> << </a> <a href="#"> < </a> <a href="#"> > </a> <a href="#"> >> </a> </th>
+									<th class="text-center"> <a href="#"> Prev </a>|<a href="#"> Next </a></th>
 									<th> # </th>
 									<th> ITEM NUMBER </th>
 									<th> DESCRIPTION </th>

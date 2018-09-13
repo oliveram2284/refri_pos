@@ -151,6 +151,16 @@ $(function() {
             console.log(new_ship_qty);
             $('#item_section #ship_qty').val(new_ship_qty).trigger('change');
         }
+        calc_or_totals();
+    });
+
+    $(document).on('change', '#item_section #unit_price', function() {
+
+        if ($(this).val() == '' && parseFloat($(this).val()) == 0) {
+            return false;
+        } else {
+            $('#item_section #ship_qty').trigger('change');
+        }
 
     });
 
@@ -162,6 +172,27 @@ $(function() {
         var ext_price = 0;
 
         if (ship_qty != '') {
+            ext_price = ship_qty * parseFloat(unit_price) * (percent / 100);
+        }
+        $('#item_section #exit_price').val(ext_price.toFixed(2));
+    });
+
+
+    $(document).on('change', '#item_section input:radio[name="tax"]', function() {
+
+
+        var percent = ($('#item_section #discuount').val() != '') ? (100 - parseFloat($('#item_section #discuount').val())) : 100;
+        var ship_qty = $("#item_section #ship_qty").val();
+        var unit_price = ($("#item_section #unit_price").val() != '' && $("#item_section #unit_price").val() != 0) ? $("#item_section #unit_price").val() : 0;
+        var ext_price = 0;
+
+        if ($(this).is(':checked') && $(this).val() == 'Y') {
+
+            if (ship_qty != '') {
+                ext_price = ship_qty * parseFloat(unit_price) * (percent / 100) * 1.07;
+            }
+            console.log
+        } else {
             ext_price = ship_qty * parseFloat(unit_price) * (percent / 100);
         }
         $('#item_section #exit_price').val(ext_price.toFixed(2));
@@ -320,7 +351,7 @@ $(function() {
             var output = [];
             $.each(response.data, function(index, item) {
                 var col0, col1, col2, col3 = '';
-                col0 = '<button class="btn btn-success btn-xs btn-block" id="item_id"  data-id="' + item.item_id + '" data-description="' + item.description1 + "\n" + item.description2 + "\n" + item.description3 + '" data-unit_price="' + item.price1 + '" data-disc1="' + item.disc1 + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="item_id"  data-id="' + item.item_id + '" data-description="' + item.description1 + " " + item.description2 + " " + item.description3 + '" data-unit_price="' + item.price1 + '" data-disc1="' + item.disc1 + '" > SELECT </button>';
                 col1 = item.item_id;
                 col2 = item.description1 + " " + item.description2 + " " + item.description3;
                 col3 = item.vendor_id;
@@ -359,7 +390,7 @@ $(function() {
     });
 
 
-    $("#bt_clear_product_form").click(function() {
+    $("#bt_clear_product_form1,#bt_clear_product_form2").click(function() {
         console.debug("===> bt_clear_product_form");
         $("#item_section").find("input").val(null);
     });
@@ -396,14 +427,14 @@ $(function() {
             '<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>' +
             '<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
         col1 = i;
-        col2 = '<input type="text" id="item_1_' + i + '" name="items[item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:200px">';
+        col2 = '<input type="text" id="item_1_' + i + '" name="items[item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:200px" disabled>';
         //col3 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" value="' + $("#item_description").val() + '">';
-        col3 = '<textarea type="text" id="item_2_' + i + '" name="items[item_number]" class="form-control form-control-sm" style="width: 350px;" >' + $("#item_description").val() + '</textarea>';
-        col4 = '<input type="text" id="item_3_' + i + '" name="items[order_qty]" class="form-control form-control-sm text-right" value="' + $("#order_qty").val() + '">';
-        col5 = '<input type="text" id="item_4_' + i + '" name="items[ship_qty]" class="form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '">';
-        col6 = '<input type="text" id="item_5_' + i + '" name="items[bko_qty]" class="form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '">';
-        col7 = '<input type="text" id="item_6_' + i + '" name="items[unit_price]" class="form-control form-control-sm text-right" value="' + $("#unit_price").val() + '">';
-        col8 = '<input type="text" id="item_7_' + i + '" name="items[exit_price]" class="form-control form-control-sm text-right" value="' + $("#exit_price").val() + '">';
+        col3 = '<textarea type="text" id="item_2_' + i + '" name="items[item_number]" class="form-control form-control-sm" style="width: 350px;" disabled >' + $("#item_description").val() + '</textarea>';
+        col4 = '<input type="text" id="item_3_' + i + '" name="items[order_qty]" class="form-control form-control-sm text-right" value="' + $("#order_qty").val() + '" disabled>';
+        col5 = '<input type="text" id="item_4_' + i + '" name="items[ship_qty]" class="form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '" disabled >';
+        col6 = '<input type="text" id="item_5_' + i + '" name="items[bko_qty]" class="form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '" disabled>';
+        col7 = '<input type="text" id="item_6_' + i + '" name="items[unit_price]" class="form-control form-control-sm text-right" value="' + $("#unit_price").val() + '" disabled>';
+        col8 = '<input type="text" id="item_7_' + i + '" name="items[exit_price]" class="form-control form-control-sm text-right" value="' + $("#exit_price").val() + '" disabled>';
 
         $("#item_section").find("input,textarea").val(null);
 
