@@ -233,6 +233,7 @@ $(function() {
         $("#modal_search_ship").modal("show");
     });
 
+
     $(document).on('click', '#modal_search_ship #ship_to', function() {
         console.debug("#modal_search_customer #ship_to");
         var data = $(this).data();
@@ -351,7 +352,7 @@ $(function() {
             var output = [];
             $.each(response.data, function(index, item) {
                 var col0, col1, col2, col3 = '';
-                col0 = '<button class="btn btn-success btn-xs btn-block" id="item_id"  data-id="' + item.item_id + '" data-description="' + item.description1 + " " + item.description2 + " " + item.description3 + '" data-unit_price="' + item.price1 + '" data-disc1="' + item.disc1 + '" > SELECT </button>';
+                col0 = '<button class="btn btn-success btn-xs btn-block" id="item_id"  data-id="' + item.item_id + '" data-description="' + item.description1 + "\n" + item.description2 + "\n" + item.description3 + '" data-unit_price="' + item.price1 + '" data-disc1="' + item.disc1 + '" > SELECT </button>';
                 col1 = item.item_id;
                 col2 = item.description1 + " " + item.description2 + " " + item.description3;
                 col3 = item.vendor_id;
@@ -427,9 +428,9 @@ $(function() {
             '<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>' +
             '<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
         col1 = i;
-        col2 = '<input type="text" id="item_1_' + i + '" name="items[item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:200px" disabled>';
+        col2 = '<input type="text" id="item_1_' + i + '" name="items[item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:180px" disabled>';
         //col3 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" value="' + $("#item_description").val() + '">';
-        col3 = '<textarea type="text" id="item_2_' + i + '" name="items[item_number]" class="form-control form-control-sm" style="width: 350px;" disabled >' + $("#item_description").val() + '</textarea>';
+        col3 = '<textarea type="text" id="item_2_' + i + '" name="items[item_number]" class="form-control form-control-sm" style="width: 500px; height: 30px;" disabled >' + $("#item_description").val().replace('\n', ' ').replace('\n', ' ') + '</textarea>';
         col4 = '<input type="text" id="item_3_' + i + '" name="items[order_qty]" class="form-control form-control-sm text-right" value="' + $("#order_qty").val() + '" disabled>';
         col5 = '<input type="text" id="item_4_' + i + '" name="items[ship_qty]" class="form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '" disabled >';
         col6 = '<input type="text" id="item_5_' + i + '" name="items[bko_qty]" class="form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '" disabled>';
@@ -441,9 +442,13 @@ $(function() {
         $("#cart_table").DataTable().row.add([col0, col1, col2, col3, col4, col5, col6, col7, col8]).draw();
 
         calc_or_totals();
-
         $("#order_total").val(null);
         $("#bko_total").val(null);
+
+        // $(document).on('change', '#item_section').find("")
+
+
+
     });
 
 

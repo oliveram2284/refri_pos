@@ -23,7 +23,10 @@
 								<div class="btn-group btn-group-toggle" data-toggle="buttons">
 									
 								<label class="btn btn-xs btn-light ">
-									<input type="radio" name="options" id="option1" autocomplete="off" checked> VERIFY CHANGE
+									<input type="radio" name="options" id="option1" autocomplete="off" checked> VERIFY 
+								</label>
+								<label class="btn btn-xs btn-light ">
+									<input type="radio" name="options" id="option1" autocomplete="off" checked> CHANGE
 								</label>
 								<label class="btn btn-xs btn-light ">
 									<input type="radio" name="options" id="option1" autocomplete="off" checked> CREDIT
@@ -39,9 +42,9 @@
 							<label><strong>BKO: </strong> <input type="text" class="input_custom"  id="bko_total"   name="bko_total"   value="" size="15"/></label>	
 						</div>
 						<div class="col col-2 border pt-2 text-right"> 
+							<button id="bt_cart" type="button" class="btn btn-xs btn-danger" disabled><i class="fab fa-stripe-s fa-sm"></i></button>
                             <button id="bt_save" type="button" class="btn btn-xs btn-success " ><i class="fas fa-save fa-sm"></i></button>
 							<button id="bt_pending" type="button" class="btn btn-xs btn-warning " disabled><i class="far fa-hourglass fa-sm "></i></button>
-							<button id="bt_cart" type="button" class="btn btn-xs btn-danger" disabled><i class="fas fa-shopping-cart fa-sm"></i></button>
 							<button id="bt_out" type="button" class="btn btn-xs btn-info " ><i class="fas fa-power-off fa-sm " ></i></button>
 						</div>
 					</div>
@@ -51,7 +54,7 @@
 				<!-- SALESMAN SECTION -->
 				<!-- CUSTOMER SECTION -->
 				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2  box">
-					<div class="row border border-light">
+					<div class="row border border-light"  id="sold_section" >
 						<div class="col  border">
                             <label>
 								<strong>SOLD TO: </strong> <input type="text" id="customer_id" name="customer_id"  class="input_custom"   value="" size="5"/>
@@ -100,7 +103,7 @@
 
 
 				<!-- PRODUCT SECTION -->
-				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2 border-bottom box">
+				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2  box">
 					<div class="row border border-light" id="item_section">
 						<div class="col col-2 border">
 							<label>
@@ -149,9 +152,9 @@
 						</div>
 						<div class="col  border text-center">
 							<label class="text-center"><strong>TX</strong> </label>	
-							<label class="text-center"><input class="form-check-input" type="radio" name="tax" id="tax1" value="Y" checked>
+							<label class="text-center"><input class="" type="radio" name="tax" id="tax1" value="Y" style="padding-left:  5px !important;">
 							Yes</label>	
-							<label class="text-center"><input class="form-check-input" type="radio" name="tax" id="tax1" value="N" checked>
+							<label class="text-center"><input class="" type="radio" name="tax" id="tax1" value="N" checked>
 							No</label>
 						</div>
 						<div class="col col-sm border text-center">
@@ -164,12 +167,16 @@
 				</div>
 				<!-- PRODUCT SECTION -->
 				<!-- CART SECTION -->
-				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2 border-bottom box">
-					<div class="row border border-light">
+				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2  box">
+					<div id="cart_section" class="row border border-light">
 						<table id="cart_table" class="table table-sm  datatable">
 							<thead>
 								<tr>
-									<th class="text-center"> <a href="#"> Prev </a>|<a href="#"> Next </a></th>
+									<th class="text-center" >
+										<div id="new_pagination" style="font-size: 11px;font-weight: 600;">
+											<a href="#"> Prev </a>|<a href="#"> Next </a>
+										</div>
+									</th>
 									<th> # </th>
 									<th> ITEM NUMBER </th>
 									<th> DESCRIPTION </th>
