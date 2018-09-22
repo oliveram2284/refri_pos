@@ -445,20 +445,21 @@ class InventoryMaster extends CI_Model {
         }
         
         if($data['search']['value']!=''){
-            $this->db->or_where('i.id ',$data['search']['value']);	
-            $this->db->or_where('i.item_id ',$data['search']['value']);	
-            $this->db->or_where('i.description1',$data['search']['value']);	
-            $this->db->or_where('i.description2',$data['search']['value']);	
-            $this->db->or_where('i.description3',$data['search']['value']);	
+            $this->db->where('i.id ',$data['search']['value']);	
+            $this->db->or_like('i.item_id ',$data['search']['value']);	
+            $this->db->or_like('i.description1',$data['search']['value']);	
+            $this->db->or_like('i.description2',$data['search']['value']);	
+            $this->db->or_like('i.description3',$data['search']['value']);	
 			$this->db->or_like('i.vendor_id',$data['search']['value']);	
 			$this->db->or_like('i.vendor_part',$data['search']['value']);	
 			$this->db->or_like('i.department_id',$data['search']['value']);	
 			$this->db->or_like('i.category_id',$data['search']['value']);	
 			$this->db->or_like('i.group_id',$data['search']['value']);	
-			$this->db->or_like('i.family_id',$data['search']['value']);	
+			$this->db->or_like('i.family_id',$data['search']['value']);
 		}
 		$this->db->limit($data['length'],$data['start']);
         $query = $this->db->get();
+        
 		return $query->result_array();
     }
 }

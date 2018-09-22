@@ -42,10 +42,10 @@
 							<label><strong>BKO: </strong> <input type="text" class="input_custom"  id="bko_total"   name="bko_total"   value="" size="15"/></label>	
 						</div>
 						<div class="col col-2 border pt-2 text-right"> 
-							<button id="bt_cart" type="button" class="btn btn-xs btn-danger" disabled><i class="fab fa-stripe-s fa-sm"></i></button>
-                            <button id="bt_save" type="button" class="btn btn-xs btn-success " ><i class="fas fa-save fa-sm"></i></button>
-							<button id="bt_pending" type="button" class="btn btn-xs btn-warning " disabled><i class="far fa-hourglass fa-sm "></i></button>
-							<button id="bt_out" type="button" class="btn btn-xs btn-info " ><i class="fas fa-power-off fa-sm " ></i></button>
+							<button id="bt_cart" type="button" class="btn btn-sm btn-danger" disabled><i class="fab fa-stripe-s fa-sm"></i></button>
+                            <button id="bt_save" type="button" class="btn btn-sm btn-success " ><i class="fas fa-save fa-sm"></i></button>
+							<button id="bt_pending" type="button" class="btn btn-sm btn-warning " disabled><i class="far fa-hourglass fa-sm "></i></button>
+							<button id="bt_out" type="button" class="btn btn-sm btn-info " ><i class="fas fa-power-off fa-sm " ></i></button>
 						</div>
 					</div>
 
@@ -151,17 +151,17 @@
 							<input type="text"   min="0" step="0.101" pattern="^\d+(?:\.\d{1,2})?$" id="exit_price" name="exit_price" class="form-control form-control-sm text-right" disabled>	
 						</div>
 						<div class="col  border text-center">
-							<label class="text-center"><strong>TX</strong> </label>	
-							<label class="text-center"><input class="" type="radio" name="tax" id="tax1" value="Y" style="padding-left:  5px !important;">
+							<label class="text-center title">TX </label>	
+							<label class="text-center radio_tx"><input class="" type="radio" name="tax" id="tax1" value="Y" style="padding-left:  5px !important;">
 							Yes</label>	
-							<label class="text-center"><input class="" type="radio" name="tax" id="tax1" value="N" checked>
+							<label class="text-center radio_tx"><input class="" type="radio" name="tax" id="tax1" value="N" checked>
 							No</label>
 						</div>
 						<div class="col col-sm border text-center">
 							<br>
 						<label class="text-center">
-							<button  type="button" id="bt_add_product" class="btn btn-info btn-xs " col="3" row="3"><i class="fas fa-plus fa-xs"></i></button>						
-							<button type="button" id="bt_clear_product_form2" class="btn btn-danger btn-xs "><i class="fas fa-times fa-xs"></i></button> </label> 
+							<button  type="button" id="bt_add_product" class="btn btn-info btn-sm " col="3" row="3"><i class="fas fa-plus fa-xs"></i></button>						
+							<button type="button" id="bt_clear_product_form2" class="btn btn-danger btn-sm "><i class="fas fa-times fa-xs"></i></button> </label> 
 						</div>
 					</div>
 				</div>
@@ -194,13 +194,150 @@
 					</div>
 				</div>
                 <!-- CART SECTION -->
- </form>               
-				<input type="hidden" value="<?php echo base_url();?>" id="url">				
-                <?php $this->load->view('orders/_modal_customer_search'); ?>
-                <?php $this->load->view('orders/_modal_ship_search'); ?>
-                <?php $this->load->view('orders/_modal_salesman_search'); ?>
-                <?php $this->load->view('orders/_modal_ship_vias_search'); ?>
-                <?php $this->load->view('orders/_modal_terms_search'); ?>
-                <?php $this->load->view('orders/_modal_items_search'); ?>
+ </form>              
+ <input type="hidden" value="<?php echo base_url();?>" id="url">	
+ <?php $this->load->view('layout/scripts'); ?>
+
+			<?php if(isset($scripts)):?>
+        
+        <?php foreach ($scripts as $key => $value):?>
+            <script type="text/javascript" src="<?php  echo base_url();?>assets/js_library/<?php  echo $value;?>"></script>
+        <?php endforeach;?>
+        <?php endif;?>
+
+
+
+	<!-- Customer Modal -->
+	<div id="modal_search_customer" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg custom-modal">
+			<div class="modal-content">
+			<div class="modal-header head-success">
+				<h5 class="modal-title" id="exampleModalLabel">Search Customer Master</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">				
+			</div>			
+			<div class="modal-footer head-success ">
+			<h5 class="modal-title" id="exampleModalLabel">Search Customer Master</h5>
+			</div>
+			</div>
+		</div>
+	</div>
+	<!-- Customer Modal -->
+
+	<!-- SHIT TO  MODAL -->
+	<div id="modal_search_ship" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg custom-modal">
+			<div class="modal-content">
+			<div class="modal-header head-success">
+				<h5 class="modal-title text-center col-12" id="exampleModalLabel">Search ship To</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body"></div>
+			
+			<div class="modal-footer head-success">
+				<h5 class="modal-title text-center col-12" id="exampleModalLabel">Search ship To</h5>
+			</div> 
+			</div>
+		</div>
+	</div>
+	<!-- SHIT TO MODAL -->
+
+
+	<!-- SALESMAN MODAL -->
+	<div id="modal_search_salesman" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg custom-modal">
+			<div class="modal-content">
+				<div class="modal-header head-success">
+					<h5 class="modal-title text-center col-12" id="exampleModalLabel">Search Salesman</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">				
+				</div>      
+				<div class="modal-footer head-success">
+					<h5 class="modal-title text-center col-12" id="exampleModalLabel">Search Salesman</h5>
+				</div> 
+			</div>
+		</div>
+	</div>
+
+	<!-- SALESMAN MODAL -->
+
+	<!-- SHIP VIA MODAL -->
+	
+	<div id="modal_search_ship_vias" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg custom-modal">
+		<div class="modal-content">
+		<div class="modal-header head-success">
+			<h5 class="modal-title text-center col-12" id="exampleModalLabel">Search SHIP VIA</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			
+		</div>
+		
+		<div class="modal-footer head-success">
+			<h5 class="modal-title text-center col-12" id="exampleModalLabel">Search Salesman</h5>
+		</div> 
+		</div>
+	</div>
+	</div>
+	<!-- SHIP VIA MODAL -->
+
+	<!-- TERMS MODAL -->
+	
+	<div id="modal_search_terms" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg custom-modal">
+		<div class="modal-content">
+		<div class="modal-header head-success">
+			<h5 class="modal-title text-center col-12" id="exampleModalLabel">Search TERMS</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+		
+		</div>
+		
+		<div class="modal-footer head-success">
+			<h5 class="modal-title text-center col-12" id="exampleModalLabel">Search TERMS</h5>
+		</div>
+		</div>
+	</div>
+	</div>
+
+	<!-- TERMS MODAL -->
+
+
+	<!-- ITEMS MODAL -->
+	
+	<div id="modal_search_item" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg  custom-modal">
+			<div class="modal-content" style="width: 1050px;">
+			<div class="modal-header  head-success">
+				<h5 class="modal-title text-center " id="exampleModalLabel">Search Inventory Master</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
 				
+			</div>
+			
+			<div class="modal-footer head-success">
+				<h5 class="modal-title text-center " id="exampleModalLabel">Search Inventory Master</h5>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ITEMS MODAL -->
         

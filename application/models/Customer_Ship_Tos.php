@@ -140,9 +140,7 @@ class Customer_Ship_Tos extends CI_Model {
     public function getFiltered( $id=null,$data = null){
 
 
-        if($id){
-            $data['search']['value']=$id;
-        }
+        
 
         $this->db->select("*");
         $this->db->from('customer_shiptos as cs');
@@ -179,14 +177,25 @@ class Customer_Ship_Tos extends CI_Model {
                 $this->db->order_by('cs.ship_loc',$data['order'][0]['dir']);
             }
         }
-        //$this->db->where('a.status!= ',2);	
+        //$this->db->where('a.status!= ',2);
+        if($id){
+            $this->db->where('cs.customer_id',$id);	            
+        }	
 		if($data['search']['value']!=''){
-            $this->db->or_where('cs.ship_loc',$data['search']['value']);	
-			$this->db->or_like('cs.customer_id',$data['search']['value']);	
-			$this->db->or_like('cs.address1',$data['search']['value']);
-			$this->db->or_like('cs.state',$data['search']['value']);	
-			$this->db->or_like('cs.zip_code',$data['search']['value']);	
-			$this->db->or_like('cs.country',$data['search']['value']);	
+            if($id){
+                //$this->db->where('cs.customer_id',$id);	
+                $this->db->or_where("( `cs`.`ship_loc` = '".$data['search']['value']."' OR `cs`.`address1` LIKE '%".$data['search']['value']."%' ESCAPE '!' OR `cs`.`state` LIKE '%".$data['search']['value']."%' ESCAPE '!' OR `cs`.`zip_code` LIKE '%".$data['search']['value']."%' ESCAPE '!' OR `cs`.`country` LIKE '%".$data['search']['value']."%' ESCAPE '!') ");
+                //$this->db->query("SELECT * FROM `customer_shiptos` as `cs` WHERE `cs`.`customer_id` = '101010' OR `cs`.`ship_loc` = '".$data['search']['value']."' OR `cs`.`address1` LIKE '%".$data['search']['value']."%' ESCAPE '!' OR `cs`.`state` LIKE '%".$data['search']['value']."%' ESCAPE '!' OR `cs`.`zip_code` LIKE '%".$data['search']['value']."%' ESCAPE '!' OR `cs`.`country` LIKE '%".$data['search']['value']."%' ESCAPE '!' ORDER BY `cs`.`ship_loc` ASC LIMIT 10");
+            }else{
+                
+            
+                $this->db->or_where('cs.ship_loc',$data['search']['value']);	
+                //$this->db->or_like('cs.customer_id',$data['search']['value']);	
+                $this->db->or_like('cs.address1',$data['search']['value']);
+                $this->db->or_like('cs.state',$data['search']['value']);	
+                $this->db->or_like('cs.zip_code',$data['search']['value']);	
+                $this->db->or_like('cs.country',$data['search']['value']);	
+            }
             //$this->db->or_like('DATE_FORMAT(a.date_added, "%d-%m-%Y %H:%i")',$data['search']['value']);
 		}
 		$this->db->limit($data['length'],$data['start']);

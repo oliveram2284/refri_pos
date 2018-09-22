@@ -118,6 +118,15 @@
         margin-bottom: 0px;
     }
     
+    .box label.title {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .box .radio_tx {
+        height: 20px;
+    }
+    
     .box p {
         font-size: 13px;
         width: 100%;
@@ -147,6 +156,7 @@
     
     #item_section {
         background-color: #cffffd;
+        min-height: 120px;
     }
     
     #cart_section {
@@ -161,6 +171,10 @@
     
     #item_section textarea {
         height: 60px;
+    }
+    
+    #cart_table th {
+        font-size: 12px !important;
     }
     
     #cart_table textarea,

@@ -18,6 +18,8 @@ class Main extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+
 	function __construct(){
         parent::__construct();
         $this->load->model('Operators');
@@ -46,12 +48,55 @@ class Main extends CI_Controller {
 		$data=array();
 		$id='129';
 		$data['operator']=$this->Operators->getById($id);
+		$data['scripts'][]='orders/order_form.js';
 		$this->load->view('orders/order_form',$data);
-		$data=array();
-        $data['scripts'][]='orders/order_form.js';
-		$this->load->view('layout/footer.php',$data);
+        
+		$this->load->view('layout/footer.php');
 
 	}
+
+
+	public function modal_customer(){
+		$data = array();
+		$this->output
+               ->set_content_type('application/json')
+               ->set_output($this->load->view( 'orders/_modal_customer_search', $data, true ));
+	}
+	public function modal_ship_to($customer_id=null){
+		$data = array();
+		$data['customer_id']=$customer_id;
+		$this->output
+               ->set_content_type('application/json')
+               ->set_output($this->load->view( 'orders/_modal_ship_search', $data, true ));
+	}
+
+	public function modal_salesman(){
+		$data = array();
+		$this->output
+               ->set_content_type('application/json')
+               ->set_output($this->load->view( 'orders/_modal_salesman_search', $data, true ));
+	}
+
+	public function modal_ship_via(){
+		$data = array();
+		$this->output
+               ->set_content_type('application/json')
+               ->set_output($this->load->view( 'orders/_modal_ship_vias_search', $data, true ));
+	}
+	
+	public function modal_terms(){
+		$data = array();
+		$this->output
+               ->set_content_type('application/json')
+               ->set_output($this->load->view( 'orders/_modal_terms_search', $data, true ));
+	}
+	public function modal_products_items(){
+		$data = array();
+		$this->output
+               ->set_content_type('application/json')
+               ->set_output($this->load->view( 'orders/_modal_items_search', $data, true ));
+	}
+	
 
 	public function find_customers(){
 		
@@ -66,12 +111,13 @@ class Main extends CI_Controller {
 		);
 
 		echo json_encode($response);
+		
 	}
 
 
 	public function find_ship($id=null){
 		$recordsTotal= $this->Customer_Ship_Tos->getTotalFiltered($id,$_REQUEST);
-			$data= $this->Customer_Ship_Tos->getFiltered($id,$_REQUEST);
+		$data= $this->Customer_Ship_Tos->getFiltered($id,$_REQUEST);
 		
        
 		$response=array(
