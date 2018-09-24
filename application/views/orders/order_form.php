@@ -169,7 +169,7 @@
 				<!-- CART SECTION -->
 				<div class=" justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2 mb-2  box">
 					<div id="cart_section" class="row border border-light">
-						<table id="cart_table" class="table table-sm  datatable">
+						<table id="cart_table" class="table table-sm  datatable table-renponsive">
 							<thead>
 								<tr>
 									<th class="text-center" >
@@ -184,17 +184,18 @@
 									<th class="text-right"> SHIP QTY</th>
 									<th class="text-right"> BKO QTY</th>
 									<th class="text-right"> UNIT PRICE </th>
+									<th class="text-right"> Discount </th>
 									<th class="text-right"> EXIT PRICE </th>
 								</tr>
 							</thead>
 							<tbody>
-							
 							</tbody>
 						</table>
 					</div>
 				</div>
                 <!-- CART SECTION -->
  </form>              
+ 
  <input type="hidden" value="<?php echo base_url();?>" id="url">	
  <?php $this->load->view('layout/scripts'); ?>
 

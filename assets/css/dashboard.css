@@ -173,6 +173,10 @@
         height: 60px;
     }
     
+    #cart_table {
+        width: 100% !important;
+    }
+    
     #cart_table th {
         font-size: 12px !important;
     }
@@ -248,6 +252,19 @@
     
     #cart_table_paginate {
         display: none !important;
+    }
+    
+    #loadingDiv {
+        display: none;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1200px) {
+        .box label {
+            font-size: .5rem;
+        }
+        #find_item_datatable th {
+            font-size: .5rem;
+        }
     }
     
     @media (min-width: 992px) {

@@ -14,11 +14,13 @@ $(function() {
         "responsive": true,
         "pagingType": "simple_numbers",
         "columnDefs": [
+            { 'targets': 1, render: function(data, type, row, meta) { return meta.row + 1; } },
             { "targets": [0, 1], "className": 'text-center', },
+            { "targets": [8], "visible": false }
         ],
         "order": [
-            [1, "desc"]
-        ]
+            [1, "ASC"]
+        ],
     });
 
     // LOAD SEARCH CUSTOMER MODAL
@@ -141,8 +143,6 @@ $(function() {
     $(document).on('click', '#modal_search_item #item_id', function() {
         console.debug("#modal_search_item #item_id");
         var data = $(this).data();
-        console.debug("data: %o", data);
-        console.debug("data: %o", data.description);
         $("form").find("#item_number").val(data.id);
         $("form").find("#item_description").val(data.description);
         $("form").find("#unit_price").val(data.unit_price);
@@ -265,43 +265,123 @@ $(function() {
         var col0, col1, col2, col3, col4, col5, col6, col7, col8 = '';
 
         col0 =
-            '<button type="button" class="btn btn-xs btn-warning" disabled><i class="fas fa-eye fa-sm"></i></button>' +
-            '<button type="button" class="btn btn-xs btn-success " disabled><i class="fas fa-edit fa-sm"></i></button>' +
-            '<button type="button" class="btn btn-xs btn-danger " disabled><i class="far fa-trash-alt fa-sm "></i></button>' +
-            '<button type="button" class="btn btn-xs btn-info " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
-        col1 = i;
-        col2 = '<input type="text" id="item_1_' + i + '" name="items[item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:180px" disabled>';
+            '<button type="button" class=" bt_item_view btn btn-xs btn-warning mr-1" disabled><i class="fas fa-eye fa-sm"></i></button>' +
+            '<button type="button" class="bt_item_edit btn btn-xs btn-success mr-1 " ><i class="fas fa-edit fa-sm"></i></button>' +
+            '<button type="button" class="bt_item_delete btn btn-xs btn-danger mr-1 " ><i class="far fa-trash-alt fa-sm "></i></button>' +
+            '<button type="button" class="bt_item_external btn btn-xs btn-info mr-1 " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
+        col1 = " -  " + i;
+        col2 = '<input type="text" id="item_item_number_' + i + '" name="items[' + i + '][item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:180px" disabled>';
         //col3 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" value="' + $("#item_description").val() + '">';
-        col3 = '<textarea type="text" id="item_2_' + i + '" name="items[item_number]" class="form-control form-control-sm" style="width: 500px; height: 30px;" disabled >' + $("#item_description").val().replace('\n', ' ').replace('\n', ' ') + '</textarea>';
-        col4 = '<input type="text" id="item_3_' + i + '" name="items[order_qty]" class="form-control form-control-sm text-right" value="' + $("#order_qty").val() + '" disabled>';
-        col5 = '<input type="text" id="item_4_' + i + '" name="items[ship_qty]" class="form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '" disabled >';
-        col6 = '<input type="text" id="item_5_' + i + '" name="items[bko_qty]" class="form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '" disabled>';
-        col7 = '<input type="text" id="item_6_' + i + '" name="items[unit_price]" class="form-control form-control-sm text-right" value="' + $("#unit_price").val() + '" disabled>';
-        col8 = '<input type="text" id="item_7_' + i + '" name="items[exit_price]" class="form-control form-control-sm text-right" value="' + $("#exit_price").val() + '" disabled>';
+        col3 = '<textarea type="text" id="item_item_description_' + i + '"name="items[' + i + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; height: 30px;" data-description="' + $("#item_description").val() + '" disabled  >' + $("#item_description").val().replace('\n', ' ').replace('\n', ' ') + '</textarea>';
+        col4 = '<input type="text" id="item_order_qty_' + i + '" name="items[' + i + '][order_qty]" class=" order_qty form-control form-control-sm text-right" value="' + $("#order_qty").val() + '" disabled>';
+        col5 = '<input type="text" id="item_ship_qty_' + i + '" name="items[' + i + '][ship_qty]" class="ship_qty form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '" disabled >';
+        col6 = '<input type="text" id="item_bko_qty_' + i + '" name="items[' + i + '][bko_qty]" class=" bko_qty form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '" disabled>';
+        col7 = '<input type="text" id="item_unit_price_' + i + '" name="items[' + i + '][unit_price]" class=" unit_price form-control form-control-sm text-right" value="' + $("#unit_price").val() + '" disabled>';
+        col8 = '<input type="text" id="item_discuount_' + i + '" name="items[' + i + '][discuount]" class=" discuount form-control form-control-sm text-right" value="' + $("#discuount").val() + '" disabled>';
+        col9 = '<input type="text" id="item_exit_price_' + i + '" name="items[' + i + '][exit_price]" class=" exit_price form-control form-control-sm text-right" value="' + $("#exit_price").val() + '" disabled>';
 
         $("#item_section").find("input,textarea").val(null);
 
-        $("#cart_table").DataTable().row.add([col0, col1, col2, col3, col4, col5, col6, col7, col8]).draw();
+        $("#cart_table").DataTable().row.add([col0, col1, col2, col3, col4, col5, col6, col7, col8, col9]).draw();
 
         calc_or_totals();
         $("#order_total").val(null);
         $("#bko_total").val(null);
 
-        // $(document).on('change', '#item_section').find("")
+    });
 
+    $(document).on('click', "#cart_table .bt_item_view", function() {
+        alert("SOON ")
+    });
+
+    function load_item_to_edit(item) {
+
+    }
+
+    $(document).on('click', "#cart_table .bt_item_edit", function() {
+        //alert("Edit Item");
+        var _tr_input = $(this).parents("tr");
+        // bootbox.alert("Hello world!");
+
+        if ($("#item_number").val().length != 0) {
+            bootbox.confirm({
+                message: "<h4> Item in Process - Erase ?</h4>",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        $("#item_section").find("input,textarea").val(null);
+
+                        $("#item_number").val($(_tr_input).find("input.intput_item").val());
+                        $("#item_description").val($(_tr_input).find("textarea.item_description").data('description'));
+                        $("#unit_price").val($(_tr_input).find("input.unit_price").val());
+                        $("#order_qty").val(0);
+                        /* $("#order_qty").val($(_tr_input).find("input.order_qty").val());
+                         $("#ship_qty").val($(_tr_input).find("input.ship_qty").val());
+                         $("#bko_qty").val($(_tr_input).find("input.bko_qty").val());
+                         $("#unit_price").val($(_tr_input).find("input.unit_price").val());
+                         $("#discuount").val($(_tr_input).find("input.discuount").val());
+                         $("#exit_price").val($(_tr_input).find("input.exit_price").val());*/
+
+                        $(this).parents("tr").find('.bt_item_delete').trigger('click');
+                    }
+                    //console.log('This was logged in the callback: ' + result);
+                }
+            });
+        } else {
+
+            $("#item_section").find("input,textarea").val(null);
+
+            $("#item_number").val($(_tr_input).find("input.intput_item").val());
+            $("#item_description").val($(_tr_input).find("textarea.item_description").val());
+            $("#unit_price").val($(_tr_input).find("input.unit_price").val());
+            $("#order_qty").val(0);
+            /* $("#order_qty").val($(_tr_input).find("input.order_qty").val());
+            $("#ship_qty").val($(_tr_input).find("input.ship_qty").val());
+            $("#bko_qty").val($(_tr_input).find("input.bko_qty").val());
+            $("#unit_price").val($(_tr_input).find("input.unit_price").val());
+            $("#discuount").val($(_tr_input).find("input.discuount").val());
+            $("#exit_price").val($(_tr_input).find("input.exit_price").val());*/
+            $(this).parents("tr").find('.bt_item_delete').trigger('click');
+        }
 
 
     });
 
 
+    $(document).on('click', "#cart_table .bt_item_delete", function() {
+        var item_deleted = $(this).parents('tr').find('td:nth-child(2)').html();
+        $("#cart_table").DataTable().row($(this).parents('tr')).remove().draw();
+        var n = 1;
+        $.each($('#cart_table tr td:nth-child(2)'), function(index, val) {
+            if (parseInt($(this).html()) > parseInt(item_deleted)) {
+                temp = parseInt($(this).html()) - parseInt(item_deleted);
+                if (temp <= 1) {
+                    $(this).html(item_deleted);
+                } else {
+                    $(this).html(parseInt(item_deleted) + n);
+                }
+                n++;
+            }
+        });
+    });
 
+
+    //$(document).on('click', "#cart_table .bt_item_external", function() {});
+    /*
     $("#bt_cart").click(function() {
         alert("SOON ACTION");
     });
-
-
     $("#bt_cart").click(function() {
         alert("SOON ACTION");
-    });
+    });*/
 
 });

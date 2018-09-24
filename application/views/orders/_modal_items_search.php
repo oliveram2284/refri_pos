@@ -57,6 +57,7 @@ $(function() {
             extend: 'colvis',
             columns: ':not(.noVis)'
         }, ],
+      
         'ajax': {
             'dataType': 'json',
             'method': 'POST',
