@@ -160,7 +160,7 @@
 						<div class="col col-sm border text-center">
 							<br>
 						<label class="text-center">
-							<button  type="button" id="bt_add_product" class="btn btn-info btn-sm " col="3" row="3"><i class="fas fa-plus fa-xs"></i></button>						
+							<button  type="button"type="button" id="bt_add_product" class="btn btn-info btn-sm " col="3" row="3"><i class="fas fa-plus fa-xs"></i></button>						
 							<button type="button" id="bt_clear_product_form2" class="btn btn-danger btn-sm "><i class="fas fa-times fa-xs"></i></button> </label> 
 						</div>
 					</div>
@@ -173,8 +173,10 @@
 							<thead>
 								<tr>
 									<th class="text-center" >
-										<div id="new_pagination" style="font-size: 11px;font-weight: 600;">
-											<a href="#"> Prev </a>|<a href="#"> Next </a>
+										<div id="new_pagination" style="font-size: 10px;font-weight: 600;">
+											<button type="button" class="btn btn-link btn-sm" href="#" id="previus_bt" > Prev </button>
+											|
+											<button type="button" class="btn btn-link btn-sm"  id="next_bt"> Next </button>
 										</div>
 									</th>
 									<th> # </th>

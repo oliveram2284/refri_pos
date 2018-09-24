@@ -187,6 +187,11 @@
         overflow: hidden
     }
     
+    #cart_table .btn.btn-link {
+        padding: 0px 5px;
+        font-weight: bold;
+    }
+    
     .find_customer_datatable .table-sm td,
     .find_customer_datatable .table-sm th {
         padding: .2em;

@@ -16,10 +16,11 @@ $(function() {
         "columnDefs": [
             { 'targets': 1, render: function(data, type, row, meta) { return meta.row + 1; } },
             { "targets": [0, 1], "className": 'text-center', },
-            { "targets": [8], "visible": false }
+            { "targets": [8], "visible": false },
+            { "targets": 0, "orderable": false }
         ],
         "order": [
-            [1, "ASC"]
+            [1, "DESC"]
         ],
     });
 
@@ -374,6 +375,15 @@ $(function() {
         });
     });
 
+    $(document).on('click', "#cart_table_wrapper #previus_bt", function() {
+        console.log("===> #cart_table #previus_bt");
+        console.log($('#cart_table_wrapper').find('#cart_table_previous a').html());
+        $('#cart_table_wrapper').find('#cart_table_previous a').trigger('click');
+    })
+    $(document).on('click', "#cart_table_wrapper #next_bt", function() {
+        console.log("===> #cart_table #next");
+        $('#cart_table_wrapper').find('#cart_table_next a').trigger('click');
+    })
 
     //$(document).on('click', "#cart_table .bt_item_external", function() {});
     /*
