@@ -97,21 +97,26 @@ class Main extends CI_Controller {
                ->set_output($this->load->view( 'orders/_modal_items_search', $data, true ));
 	}
 	
-
-	public function find_customers(){
+	public function getCustomer($id=null){	
 		
+		$result=$this->Customers->getById($id);
+		if($result!=null){
+			echo json_encode(array('status'=>true,'data'=>$result));
+		}else{
+			echo json_encode(array('status'=>false,'data'=>false));
+		}
+		//return ($result!=null)?$result:array();
+	}
+	public function find_customers(){		
 		$recordsTotal= $this->Customers->getTotalFiltered($_REQUEST);
-        $data= $this->Customers->getFiltered($_REQUEST);
-       
+        $data= $this->Customers->getFiltered($_REQUEST);       
 		$response=array(
 			'draw' => $_REQUEST['draw'],
 			'recordsTotal' => $recordsTotal,
 			'recordsFiltered' => $recordsTotal,
 			'data' => $data
 		);
-
-		echo json_encode($response);
-		
+		echo json_encode($response);		
 	}
 
 

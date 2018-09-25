@@ -323,4 +323,11 @@ class Customers extends CI_Model {
         //die($this->db->last_query());
 		return $query->result_array();
     }
+
+    public function getById($id){
+        $this->db->select('c.*,(select CONCAT(s.first_name," ",s.last_name) as salsmen_name  from  salesmen  s where s.id=c.salesman_id) as salsmen_name');
+        $this->db->where('id',$id);
+        $query=$this->db->get('customers as c');
+        return $query->row_array();
+    }
 }

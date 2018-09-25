@@ -128,7 +128,7 @@
 						</div>
 						<div class="col  border text-right">
 							<label><strong>ORDER QTY</strong> </label>	
-							<input type="text" min="0" value="0" step="any" id="order_qty" name="order_qty" class="form-control form-control-sm text-right" value="">	
+							<input type="text" min="0" value="" step="any" id="order_qty" name="order_qty" class="form-control form-control-sm text-right" value="">	
 						</div>
 						<div class="col  border text-right">
 							<label><strong>SHIP QTY</strong> </label>	

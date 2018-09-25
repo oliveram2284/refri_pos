@@ -46,6 +46,42 @@ $(function() {
         $("#modal_search_customer").modal("hide");
         return false;
     });
+    // find CUSTOMER by code
+    $("form").find("#customer_id").keyup(function(e) {
+        if (e.keyCode == 13) {
+            //$(this).trigger("enterKey");
+            //alert(" customer_id: " + $(this).val());
+            var data_ajax = {
+                'dataType': 'json',
+                'method': 'GET',
+                'url': url + 'main/getCustomer/' + $(this).val(),
+                success: function(response) {
+                    console.log(response);
+                    if (!response.status) {
+                        alert("Item not found");
+                        $(this).focus();
+                    } else {
+                        $("form").find("#customer_name").val(response.data.name);
+                        $("form").find('#salesman_id').val(response.data.salesman_id);
+                        $("form").find('#salesman_name').val(response.data.salsmen_name);
+                    }
+                    return false;
+                    if (response.adherent !== undefined) {
+                        $("#adherent_name").val(response.adherent.firstname + " " + response.adherent.lastname);
+                    } else {
+                        $("#adherent_name").val(null);
+                    }
+                },
+                error: function(error) {
+                    console.debug("===> ERROR: %o", error);
+                }
+            };
+            console.debug("===> data_ajax: %o", data_ajax);
+            $.ajax(data_ajax);
+        } else {
+            console.log("===>" + $(this).val());
+        }
+    });
 
     $(document).on('change', '#item_section #order_qty', function() {
         $('#item_section #ship_qty').val($(this).val()).trigger('change');
@@ -134,10 +170,13 @@ $(function() {
 
     $("#bt_model_search_product").click(function() {
         console.debug("===> bt_model_search_product");
+        if ($("#customer_name").val().length == 0) {
+            alert("Please, complete Sold to Fields");
+            return false;
+        }
         $("#modal_search_item .modal-body").load(url + 'main/modal_products_items');
         $("#modal_search_item").modal("show");
         return false;
-
     });
 
 
@@ -170,22 +209,36 @@ $(function() {
         $("#item_section").find("input,textarea").val(null);
     });
 
+
+    //clean item_section inputs
+    $(document).on('click', '#item_section #order_qty', function() {
+        $(this).val(null);
+        $("#item_section #ship_qty").val(null);
+        $("#item_section #unit_price").val(null);
+        $("#item_section #bko_qty").val(null);
+        $("#item_section #discuount").val(null);
+        $("#item_section #exit_price").val(null);
+    });
+
+    $(document).on('click', '#item_section #ship_qty', function() {
+        $(this).val(null);
+    });
+
     $(document).on('change', '#item_section #ship_qty', function() {
         $('#item_section #ship_qty').val($(this).val());
         var ship_qty = $(this).val();
         var unit_price = ($("#item_section #unit_price").val() != '' && $("#item_section #unit_price").val() != 0) ? $("#item_section #unit_price").val() : 0;
         var ext_price = 0;
-
         if (ship_qty != '') {
             ext_price = ship_qty * parseFloat(unit_price);
         }
-
         $('#item_section #exit_price').val(ext_price.toFixed(2));
-
         calc_or_totals();
+    })
 
+    $(document).on('click', '#item_section #bko_qty', function() {
+        $(this).val(null);
     });
-
     $(document).on('change', '#item_section #bko_qty', function() {
         var bko_qty = ($(this).val() != '' || $(this).val() != 0) ? $(this).val() : 0;
 
@@ -199,6 +252,10 @@ $(function() {
         calc_or_totals();
     });
 
+
+    $(document).on('click', '#item_section #unit_price', function() {
+        $(this).val(null);
+    });
     $(document).on('change', '#item_section #unit_price', function() {
 
         if ($(this).val() == '' && parseFloat($(this).val()) == 0) {
@@ -206,16 +263,17 @@ $(function() {
         } else {
             $('#item_section #ship_qty').trigger('change');
         }
-
     });
 
-    $(document).on('change', '#item_section #discuount', function() {
 
+    $(document).on('click', '#item_section #discuount', function() {
+        $(this).val(null);
+    });
+    $(document).on('change', '#item_section #discuount', function() {
         var percent = ($(this).val() != '') ? (100 - $(this).val()) : 100;
         var ship_qty = $("#item_section #ship_qty").val();
         var unit_price = ($("#item_section #unit_price").val() != '' && $("#item_section #unit_price").val() != 0) ? $("#item_section #unit_price").val() : 0;
         var ext_price = 0;
-
         if (ship_qty != '') {
             ext_price = ship_qty * parseFloat(unit_price) * (percent / 100);
         }
@@ -259,7 +317,11 @@ $(function() {
 
     $("#bt_add_product").click(function() {
         console.debug("===> bt_add_product");
-        if ($("#item_number").val() == '') {
+        console.debug('===> item_number: %o', $("#item_number").val());
+        console.debug('===> order_qty: %o', $("#order_qty").val());
+
+        if ($("#item_number").val() == '' || $("#order_qty").val() == '') {
+            alert("You must to complete ITEM NUMBER field and ORDER QTY");
             return false;
         }
         var i = $("#cart_table").DataTable().rows().count() + 1;
