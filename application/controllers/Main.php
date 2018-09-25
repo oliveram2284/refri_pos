@@ -90,6 +90,7 @@ class Main extends CI_Controller {
                ->set_content_type('application/json')
                ->set_output($this->load->view( 'orders/_modal_terms_search', $data, true ));
 	}
+
 	public function modal_products_items(){
 		$data = array();
 		$this->output
@@ -105,7 +106,6 @@ class Main extends CI_Controller {
 		}else{
 			echo json_encode(array('status'=>false,'data'=>false));
 		}
-		//return ($result!=null)?$result:array();
 	}
 	public function find_customers(){		
 		$recordsTotal= $this->Customers->getTotalFiltered($_REQUEST);
@@ -193,6 +193,16 @@ class Main extends CI_Controller {
 		);
 
 		echo json_encode($response);
+	}
+
+	public function getItem($id=null){	
+		
+		$result=$this->InventoryMaster->getById($id);
+		if($result!=null){
+			echo json_encode(array('status'=>true,'data'=>$result));
+		}else{
+			echo json_encode(array('status'=>false,'data'=>false));
+		}
 	}
 
 	

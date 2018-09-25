@@ -462,4 +462,12 @@ class InventoryMaster extends CI_Model {
         
 		return $query->result_array();
     }
+
+
+    public function getById($id){
+        $this->db->select('id,item_id,vendor_part,description1,description2,description3,price1,disc1');
+        $this->db->where('item_id',$id);
+        $query=$this->db->get('inv_tbl_mstr');
+        return $query->row_array();
+    }
 }

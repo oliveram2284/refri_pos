@@ -49,8 +49,6 @@ $(function() {
     // find CUSTOMER by code
     $("form").find("#customer_id").keyup(function(e) {
         if (e.keyCode == 13) {
-            //$(this).trigger("enterKey");
-            //alert(" customer_id: " + $(this).val());
             var data_ajax = {
                 'dataType': 'json',
                 'method': 'GET',
@@ -83,9 +81,8 @@ $(function() {
         }
     });
 
-    $(document).on('change', '#item_section #order_qty', function() {
-        $('#item_section #ship_qty').val($(this).val()).trigger('change');
-    });
+
+
 
 
     // LOAD SEARCH SHIP_TO MODAL
@@ -179,6 +176,13 @@ $(function() {
         return false;
     });
 
+    $("#item_number").click(function() {
+        if ($("#customer_name").val().length == 0) {
+            alert("Please, complete Sold to Fields");
+            return false;
+        }
+    });
+
 
     $(document).on('click', '#modal_search_item #item_id', function() {
         console.debug("#modal_search_item #item_id");
@@ -193,12 +197,49 @@ $(function() {
         return false;
     });
 
-    $("#bt_info_product_form").click(function() {
-        return false;
+    //find ITEM by Code
+    $("form").find("#item_number").keyup(function(e) {
+        if (e.keyCode == 13) {
+            var data_ajax = {
+                'dataType': 'json',
+                'method': 'GET',
+                'url': url + 'main/getItem/' + $(this).val(),
+                success: function(response) {
+                    console.log(response);
+                    if (!response.status) {
+
+                        alert("Item not found");
+                        $(this).focus();
+
+                    } else {
+
+                        $("form").find("#customer_name").val(response.data.name);
+                        $("form").find('#item_description').val(response.data.description1 + '\n' + response.data.description2 + '\n' + response.data.description3);
+                        $("form").find('#unit_price').val(response.data.price1);
+                        $("form").find('#discuount').val(response.data.discuount);
+                    }
+                    return false;
+                    if (response.adherent !== undefined) {
+                        $("#adherent_name").val(response.adherent.firstname + " " + response.adherent.lastname);
+                    } else {
+                        $("#adherent_name").val(null);
+                    }
+                },
+                error: function(error) {
+                    console.debug("===> ERROR: %o", error);
+                }
+            };
+            console.debug("===> data_ajax: %o", data_ajax);
+            $.ajax(data_ajax);
+        } else {
+            console.log("===>" + $(this).val());
+        }
     });
 
 
-
+    $("#bt_info_product_form").click(function() {
+        return false;
+    });
 
 
 
@@ -209,14 +250,14 @@ $(function() {
         $("#item_section").find("input,textarea").val(null);
     });
 
-
+    $(document).on('change', '#item_section #order_qty', function() {
+        $('#item_section #ship_qty').val($(this).val()).trigger('change');
+    });
     //clean item_section inputs
     $(document).on('click', '#item_section #order_qty', function() {
         $(this).val(null);
         $("#item_section #ship_qty").val(null);
-        $("#item_section #unit_price").val(null);
         $("#item_section #bko_qty").val(null);
-        $("#item_section #discuount").val(null);
         $("#item_section #exit_price").val(null);
     });
 
