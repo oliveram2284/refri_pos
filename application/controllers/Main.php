@@ -205,6 +205,68 @@ class Main extends CI_Controller {
 		}
 	}
 
+	public function add_item_cart(){
+
+		$temp=$this->session->userdata('cart');
+		
+		if( is_null($temp)  ){
+
+			$cart=array();
+			$cart[]=$this->input->post();
+			$this->session->set_userdata('cart',$cart);
+
+		}else{
+
+			$cart =$this->session->userdata('cart');
+			$exist=false;
+
+			foreach($cart as $key=>$item){
+
+				if($this->input->post('item_number') == $item['item_number']){
+					$exist=true;
+					break;
+				}
+				//if($this->input->post('item_number'))
+			}
+			if(!$exist){
+				$cart[]=$this->input->post();
+				$this->session->set_userdata('cart',$cart);
+			}
+		}
+		echo json_encode(array('result'=>true));
+	}
+
+	public function get_cart($item_number=null){
+		
+		//var_dump($this->session->userdata('cart'));
+		//$this->session->unset_userdata('cart');
+		//var_dump($this->session->userdata('cart'));
+		echo json_encode(array('cart'=>($this->session->userdata('cart')?$this->session->userdata('cart'):array())));
+	}
+	public function clean_cart($item_number=null){
+		
+		var_dump($this->session->userdata('cart'));
+		$this->session->unset_userdata('cart');
+		var_dump($this->session->userdata('cart'));
+		echo "session cleaned";
+	}
+
+	
+	public function remove_item_cart($item_number=null){
+
+		$cart =$this->session->userdata('cart');
+		$temp =array();
+
+		foreach($cart as $key=>$item){
+			if($item_number != $item['item_number']){
+				$temp[]=$item;
+			}		
+		}
+		$this->session->set_userdata('cart',$temp);
+		echo json_encode(array('result'=>true));
+
+	}
+
 	
 	
 

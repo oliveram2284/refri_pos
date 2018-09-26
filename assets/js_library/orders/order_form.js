@@ -1,28 +1,62 @@
 $(function() {
     console.log("LOAD ORDERS/ORDER_FORM");
     var url = $("#url").val();
+    var data_table_options =
+        $("#cart_table").DataTable({
+            "searching": false,
+            "lengthChange": false,
+            "pageLength": 5,
+            "lengthMenu": [
+                [5, 10, 20, 50, 100, -1],
+                [5, 10, 20, 50, 100, 'Todos']
+            ],
+            "info": false,
+            "responsive": true,
+            "pagingType": "simple_numbers",
+            "columnDefs": [
+                { 'targets': 1, render: function(data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1 } },
+                { "targets": [0, 1], "className": 'text-center', },
+                { "targets": [8], "visible": false },
+                { "targets": 0, "orderable": false }
+            ],
+            "order": [
+                [1, "DESC"]
+            ],
+            'ajax': {
+                'dataType': 'json',
+                'method': 'POST',
+                'url': url + 'main/get_cart',
+                'dataSrc': function(response) {
+                    console.log("main / get_cart");
+                    console.log(response);
+                    var output = [];
 
-    $("#cart_table").DataTable({
-        "searching": false,
-        "lengthChange": false,
-        "pageLength": 5,
-        "lengthMenu": [
-            [5, 10, 20, 50, 100, -1],
-            [5, 10, 20, 50, 100, 'Todos']
-        ],
-        "info": false,
-        "responsive": true,
-        "pagingType": "simple_numbers",
-        "columnDefs": [
-            { 'targets': 1, render: function(data, type, row, meta) { return meta.row + 1; } },
-            { "targets": [0, 1], "className": 'text-center', },
-            { "targets": [8], "visible": false },
-            { "targets": 0, "orderable": false }
-        ],
-        "order": [
-            [1, "DESC"]
-        ],
-    });
+                    $.each(response.cart, function(index, item) {
+                        var col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10 = '';
+                        console.log(index);
+                        console.log(item);
+                        col0 =
+                            '<button type="button" class=" bt_item_view btn btn-xs btn-warning mr-1" disabled><i class="fas fa-eye fa-sm"></i></button>' +
+                            '<button type="button" class="bt_item_edit btn btn-xs btn-success mr-1 " data-item_number="' + item.item_number + '"><i class="fas fa-edit fa-sm"></i></button>' +
+                            '<button type="button" class="bt_item_delete btn btn-xs btn-danger mr-1" data-item_number="' + item.item_number + '" ><i class="far fa-trash-alt fa-sm "></i></button>' +
+                            '<button type="button" class="bt_item_external btn btn-xs btn-info mr-1 " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
+                        col1 = " -  " + index;
+                        col2 = '<input type="text" id="item_item_number_' + index + '" name="items[' + index + '][item_number]" class="intput_item form-control form-control-sm"  value="' + item.item_number + '" style="width:180px" disabled>';
+                        col3 = '<textarea type="text" id="item_item_description_' + index + '"name="items[' + index + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; height: 30px;" data-description="' + item.item_description_ + '" disabled  >' + item.item_description_ + '</textarea>';
+                        col4 = '<input type="text" id="item_order_qty_' + index + '" name="items[' + index + '][order_qty]" class=" order_qty form-control form-control-sm text-right" value="' + item.order_qty + '" disabled>';
+                        col5 = '<input type="text" id="item_ship_qty_' + index + '" name="items[' + index + '][ship_qty]" class="ship_qty form-control form-control-sm text-right" value="' + item.ship_qty + '" disabled >';
+                        col6 = '<input type="text" id="item_bko_qty_' + index + '" name="items[' + index + '][bko_qty]" class=" bko_qty form-control form-control-sm text-right" value="' + item.bko_qty + '" disabled>';
+                        col7 = '<input type="text" id="item_unit_price_' + index + '" name="items[' + index + '][unit_price]" class=" unit_price form-control form-control-sm text-right" value="' + item.unit_price + '" disabled>';
+                        col8 = '<input type="text" id="item_discuount_' + index + '" name="items[' + index + '][discuount]" class=" discuount form-control form-control-sm text-right" value="' + item.discuount + '" disabled>';
+                        col9 = '<input type="text" id="item_exit_price_' + index + '" name="items[' + index + '][exit_price]" class=" exit_price form-control form-control-sm text-right" value="' + item.exit_price + '" disabled>';
+
+
+                        output.push([col0, col1, col2, col3, col4, col5, col6, col7, col8, col9]);
+                    });
+                    return output;
+                }
+            }
+        });
 
     // LOAD SEARCH CUSTOMER MODAL
     $("#bt_model_customer").click(function() {
@@ -199,7 +233,7 @@ $(function() {
 
     //find ITEM by Code
     $("form").find("#item_number").keyup(function(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode == 13 || e.keyCode == 9) {
             var data_ajax = {
                 'dataType': 'json',
                 'method': 'GET',
@@ -213,11 +247,14 @@ $(function() {
 
                     } else {
 
-                        $("form").find("#customer_name").val(response.data.name);
+                        // $("form").find("#customer_name").val(response.data.name);
                         $("form").find('#item_description').val(response.data.description1 + '\n' + response.data.description2 + '\n' + response.data.description3);
                         $("form").find('#unit_price').val(response.data.price1);
                         $("form").find('#discuount').val(response.data.discuount);
+
                     }
+
+
                     return false;
                     if (response.adherent !== undefined) {
                         $("#adherent_name").val(response.adherent.firstname + " " + response.adherent.lastname);
@@ -259,6 +296,7 @@ $(function() {
         $("#item_section #ship_qty").val(null);
         $("#item_section #bko_qty").val(null);
         $("#item_section #exit_price").val(null);
+        $("#item_section #discuount").val(null);
     });
 
     $(document).on('click', '#item_section #ship_qty', function() {
@@ -360,7 +398,33 @@ $(function() {
         console.debug("===> bt_add_product");
         console.debug('===> item_number: %o', $("#item_number").val());
         console.debug('===> order_qty: %o', $("#order_qty").val());
+        var data_item = $('#item_section').find("input,textarea").serialize();
+        console.debug('===> DATA: %o', data_item);
 
+        var data_ajax = {
+            'dataType': 'json',
+            'method': 'POST',
+            'url': url + 'main/add_item_cart/',
+            data: $('#item_section').find("input,textarea"),
+            success: function(response) {
+
+                $("#item_section").find("input,textarea").val(null);
+
+                $("#cart_table").DataTable().ajax.reload();
+
+
+            },
+            error: function(error) {
+                console.debug("===> ERROR: %o", error);
+            }
+        };
+        console.debug("===> data_ajax: %o", data_ajax);
+        $.ajax(data_ajax);
+        calc_or_totals();
+        $("#order_total").val(null);
+        $("#bko_total").val(null);
+
+        /*
         if ($("#item_number").val() == '' || $("#order_qty").val() == '') {
             alert("You must to complete ITEM NUMBER field and ORDER QTY");
             return false;
@@ -374,23 +438,24 @@ $(function() {
             '<button type="button" class="bt_item_delete btn btn-xs btn-danger mr-1 " ><i class="far fa-trash-alt fa-sm "></i></button>' +
             '<button type="button" class="bt_item_external btn btn-xs btn-info mr-1 " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
         col1 = " -  " + i;
-        col2 = '<input type="text" id="item_item_number_' + i + '" name="items[' + i + '][item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:180px" disabled>';
+        col2 = " -  " + i;
+        col3 = '<input type="text" id="item_item_number_' + i + '" name="items[' + i + '][item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:180px" disabled>';
         //col3 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" value="' + $("#item_description").val() + '">';
-        col3 = '<textarea type="text" id="item_item_description_' + i + '"name="items[' + i + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; height: 30px;" data-description="' + $("#item_description").val() + '" disabled  >' + $("#item_description").val().replace('\n', ' ').replace('\n', ' ') + '</textarea>';
-        col4 = '<input type="text" id="item_order_qty_' + i + '" name="items[' + i + '][order_qty]" class=" order_qty form-control form-control-sm text-right" value="' + $("#order_qty").val() + '" disabled>';
-        col5 = '<input type="text" id="item_ship_qty_' + i + '" name="items[' + i + '][ship_qty]" class="ship_qty form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '" disabled >';
-        col6 = '<input type="text" id="item_bko_qty_' + i + '" name="items[' + i + '][bko_qty]" class=" bko_qty form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '" disabled>';
-        col7 = '<input type="text" id="item_unit_price_' + i + '" name="items[' + i + '][unit_price]" class=" unit_price form-control form-control-sm text-right" value="' + $("#unit_price").val() + '" disabled>';
-        col8 = '<input type="text" id="item_discuount_' + i + '" name="items[' + i + '][discuount]" class=" discuount form-control form-control-sm text-right" value="' + $("#discuount").val() + '" disabled>';
-        col9 = '<input type="text" id="item_exit_price_' + i + '" name="items[' + i + '][exit_price]" class=" exit_price form-control form-control-sm text-right" value="' + $("#exit_price").val() + '" disabled>';
+        col4 = '<textarea type="text" id="item_item_description_' + i + '"name="items[' + i + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; height: 30px;" data-description="' + $("#item_description").val() + '" disabled  >' + $("#item_description").val().replace('\n', ' ').replace('\n', ' ') + '</textarea>';
+        col5 = '<input type="text" id="item_order_qty_' + i + '" name="items[' + i + '][order_qty]" class=" order_qty form-control form-control-sm text-right" value="' + $("#order_qty").val() + '" disabled>';
+        col6 = '<input type="text" id="item_ship_qty_' + i + '" name="items[' + i + '][ship_qty]" class="ship_qty form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '" disabled >';
+        col7 = '<input type="text" id="item_bko_qty_' + i + '" name="items[' + i + '][bko_qty]" class=" bko_qty form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '" disabled>';
+        col8 = '<input type="text" id="item_unit_price_' + i + '" name="items[' + i + '][unit_price]" class=" unit_price form-control form-control-sm text-right" value="' + $("#unit_price").val() + '" disabled>';
+        col9 = '<input type="text" id="item_discuount_' + i + '" name="items[' + i + '][discuount]" class=" discuount form-control form-control-sm text-right" value="' + $("#discuount").val() + '" disabled>';
+        col10 = '<input type="text" id="item_exit_price_' + i + '" name="items[' + i + '][exit_price]" class=" exit_price form-control form-control-sm text-right" value="' + $("#exit_price").val() + '" disabled>';
 
         $("#item_section").find("input,textarea").val(null);
 
-        $("#cart_table").DataTable().row.add([col0, col1, col2, col3, col4, col5, col6, col7, col8, col9]).draw();
+        $("#cart_table").DataTable().row.add([col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10]).draw();
 
         calc_or_totals();
         $("#order_total").val(null);
-        $("#bko_total").val(null);
+        $("#bko_total").val(null);*/
 
     });
 
@@ -398,9 +463,7 @@ $(function() {
         alert("SOON ")
     });
 
-    function load_item_to_edit(item) {
 
-    }
 
     $(document).on('click', "#cart_table .bt_item_edit", function() {
         //alert("Edit Item");
@@ -462,20 +525,27 @@ $(function() {
 
 
     $(document).on('click', "#cart_table .bt_item_delete", function() {
-        var item_deleted = $(this).parents('tr').find('td:nth-child(2)').html();
-        $("#cart_table").DataTable().row($(this).parents('tr')).remove().draw();
-        var n = 1;
-        $.each($('#cart_table tr td:nth-child(2)'), function(index, val) {
-            if (parseInt($(this).html()) > parseInt(item_deleted)) {
-                temp = parseInt($(this).html()) - parseInt(item_deleted);
-                if (temp <= 1) {
-                    $(this).html(item_deleted);
-                } else {
-                    $(this).html(parseInt(item_deleted) + n);
-                }
-                n++;
+        console.log($(this).data('item_number'));
+        var item_n = $(this).data('item_number');
+        var data_ajax = {
+            'dataType': 'json',
+            'method': 'GET',
+            'url': url + 'main/remove_item_cart/' + item_n,
+            success: function(response) {
+                console.log('main/remove_item_cart/' + item_n);
+                console.log(response);
+                //$("#cart_table").DataTable().row($(this).parents('tr')).remove().draw();
+                $("#cart_table").DataTable().ajax.reload();
+
+            },
+            error: function(error) {
+                console.debug("===> ERROR: %o", error);
             }
-        });
+        };
+        console.debug("===> data_ajax: %o", data_ajax);
+        $.ajax(data_ajax);
+
+
     });
 
     $(document).on('click', "#cart_table_wrapper #previus_bt", function() {
@@ -497,4 +567,4 @@ $(function() {
         alert("SOON ACTION");
     });*/
 
-});
+})

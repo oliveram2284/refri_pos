@@ -179,6 +179,7 @@
 											<button type="button" class="btn btn-link btn-sm"  id="next_bt"> Next </button>
 										</div>
 									</th>
+									<!-- <th> # </th> -->
 									<th> # </th>
 									<th> ITEM NUMBER </th>
 									<th> DESCRIPTION </th>
@@ -191,6 +192,23 @@
 								</tr>
 							</thead>
 							<tbody>
+							<?php /*for($i=0;$i<15;$i++):?>
+							<tr>
+									<td class="text-center" >
+									<button type="button" class="bt_item_delete btn btn-xs btn-danger mr-1 " ><i class="far fa-trash-alt fa-sm "></i></button>
+									</td>
+									<td> # </td>
+									<td> # </td>
+									<td> ITEM NUMBER </td>
+									<td> DESCRIPTION </td>
+									<td class="text-right"> ORDER QTY</td>
+									<td class="text-right"> SHIP QTY</td>
+									<td class="text-right"> BKO QTY</td>
+									<td class="text-right"> UNIT PRICE </td>
+									<td class="text-right"> Discount </td>
+									<td class="text-right"> EXIT PRICE </td>
+								</tr>
+<?php endfor; */?>
 							</tbody>
 						</table>
 					</div>
