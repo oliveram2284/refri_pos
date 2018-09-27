@@ -33,10 +33,32 @@ class Main extends CI_Controller {
         /*if(!$this->auth->is_logged()){
 			redirect('login', 'refresh');
 		}*/
-    }
+	}
+	
+
+	public function login(){
+		
+		
+		if($this->input->post('email')!=null){
+			
+			$this->auth->login($this->input->post());
+			redirect('/', 'refresh');
+		}
+		$this->load->view('login');
+	}
+
+	public function logout(){
+		$this->auth->logout();
+		redirect('/', 'refresh');
+	}
+
+
 	public function index()
 	{	
-		
+		if(!$this->auth->is_logged()){
+			redirect('login', 'refresh');
+		}
+
 		$this->load->view('layout/header.php');
 		$data=array();
 		$this->load->view('index',$data);

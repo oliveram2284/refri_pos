@@ -204,4 +204,25 @@ class Operators extends CI_Model {
         return false;
 
     }
+
+    public function getByEmail($email=null){
+       
+        if($email==null){
+            return false;
+        }
+        $this->db->where('email',$email);
+        $query=$this->db->get('operators');
+        if($query->num_rows()!=0){
+            return $query->row_array();
+        }
+        
+        return false;
+
+    }
+
+
+
+
+
+
 }
