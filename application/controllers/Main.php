@@ -23,12 +23,7 @@ class Main extends CI_Controller {
 	function __construct(){
         parent::__construct();
         $this->load->model('Operators');
-        $this->load->model('Customers');
-        $this->load->model('Customer_Ship_Tos');
-        $this->load->model('Salesmen');
-		$this->load->model('ShipVias');
-		$this->load->model('ReceivablesTerms');
-		$this->load->model('InventoryMaster');        
+             
 	}
 	
 

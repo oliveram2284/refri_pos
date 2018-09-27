@@ -56,7 +56,7 @@ $(function() {
         'ajax': {
           'dataType': 'json',
           'method': 'POST',
-          'url': url + 'main/find_ship/' + customer_id,
+          'url': url + 'orders/find_ship/' + customer_id,
           'dataSrc': function(response) {
           //console.log(response);
           var output = [];
@@ -76,17 +76,7 @@ $(function() {
               });
               return output;
           }
-        }/*,
-        initComplete: function() {
-            var input = $('.dataTables_filter input').unbind(),
-                self = this.api(),
-                $searchButton = $('<button class="btn btn-success btn-sm" style="margin-left:5px">')
-                .html(' <i class="fa fa-search "></i> Search')
-                .click(function() {
-                    self.search(input.val()).draw();
-                })
-            $('.dataTables_filter').append($searchButton); //, $clearButton);
-        }*/
+        }
     });
 });
 </script>

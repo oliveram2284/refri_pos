@@ -52,7 +52,7 @@ $(function() {
         'ajax': {
             'dataType': 'json',
             'method': 'POST',
-            'url': url + 'main/find_ship_vias',
+            'url': url + 'orders/find_ship_vias',
             'dataSrc': function(response) {
               var output = [];
               $.each(response.data, function(index, item) {
@@ -65,17 +65,7 @@ $(function() {
               });
               return output;
           }
-        }/*,
-        initComplete: function() {
-            var input = $('.dataTables_filter input').unbind(),
-                self = this.api(),
-                $searchButton = $('<button class="btn btn-success btn-sm" style="margin-left:5px">')
-                .html(' <i class="fa fa-search "></i> Search')
-                .click(function() {
-                    self.search(input.val()).draw();
-                })
-            $('.dataTables_filter').append($searchButton); //, $clearButton);
-        }*/
+        }
     });
 });
 </script>

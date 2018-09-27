@@ -61,7 +61,7 @@ $(function() {
         'ajax': {
             'dataType': 'json',
             'method': 'POST',
-            'url': url + 'main/find_items',
+            'url': url + 'orders/find_items',
             'dataSrc':function(response) {
             var output = [];
             $.each(response.data, function(index, item) {

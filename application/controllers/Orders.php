@@ -20,10 +20,17 @@ class Orders extends CI_Controller {
 	 */
 
 	function __construct(){
-        parent::__construct();
+		parent::__construct();
+		$this->load->model('Customers');
+        $this->load->model('Customer_Ship_Tos');
+        $this->load->model('Salesmen');
+		$this->load->model('ShipVias');
+		$this->load->model('ReceivablesTerms');
+		$this->load->model('InventoryMaster');  
         if(!$this->auth->is_logged()){
 			redirect('login', 'refresh');
 		}
+		
 	}
 	
 	public function index()
@@ -37,7 +44,8 @@ class Orders extends CI_Controller {
 		$this->clean_cart();
 		$this->load->view('layout/header.php');
 		$data=array();
-		$id='129';
+	
+		$id=$this->session->userdata('id');
 		$data['operator']=$this->Operators->getById($id);
 		$data['scripts'][]='orders/order_form.js';
 		$this->load->view('orders/order_form',$data);        
