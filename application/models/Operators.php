@@ -210,8 +210,10 @@ class Operators extends CI_Model {
         if($email==null){
             return false;
         }
-        $this->db->where('email',$email);
+        $this->db->where('lower(email)',strtolower($email));
         $query=$this->db->get('operators');
+        //echo $this->db->last_query();
+        //die();
         if($query->num_rows()!=0){
             return $query->row_array();
         }

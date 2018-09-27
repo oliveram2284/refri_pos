@@ -25,7 +25,7 @@ $(function() {
         'ajax': {
             'dataType': 'json',
             'method': 'POST',
-            'url': url + 'main/get_cart',
+            'url': url + 'orders/get_cart',
             'dataSrc': function(response) {
                 console.log("main / get_cart");
                 console.log(response);
@@ -60,7 +60,7 @@ $(function() {
 
     // LOAD SEARCH CUSTOMER MODAL
     $("#bt_model_customer").click(function() {
-        $("#modal_search_customer .modal-body").load(url + 'main/modal_customer');
+        $("#modal_search_customer .modal-body").load(url + 'orders/modal_customer');
         $("#modal_search_customer").modal("show");
         return false;
     });
@@ -86,7 +86,7 @@ $(function() {
             var data_ajax = {
                 'dataType': 'json',
                 'method': 'GET',
-                'url': url + 'main/getCustomer/' + $(this).val(),
+                'url': url + 'orders/getCustomer/' + $(this).val(),
                 success: function(response) {
                     console.log(response);
                     if (!response.status) {
@@ -124,7 +124,7 @@ $(function() {
         console.debug("===> bt_model_ship");
         var customer_id = $(document).find("#customer_id").val();
         console.debug("===> customer_id: %o", customer_id);
-        $("#modal_search_ship .modal-body").load(url + 'main/modal_ship_to/' + customer_id);
+        $("#modal_search_ship .modal-body").load(url + 'orders/modal_ship_to/' + customer_id);
         $("#modal_search_ship").modal("show");
     });
 
@@ -143,7 +143,7 @@ $(function() {
     // LOAD SEARCH SALESMAN MODAL
     $("#bt_model_sales").click(function() {
         console.debug("===> bt_model_sales");
-        $("#modal_search_salesman .modal-body").load(url + 'main/modal_salesman/');
+        $("#modal_search_salesman .modal-body").load(url + 'orders/modal_salesman/');
         $("#modal_search_salesman").modal("show");
         return false;
     });
@@ -161,7 +161,7 @@ $(function() {
 
     $("#bt_model_ship_via").click(function() {
         console.debug("===> bt_model_ship_via");
-        $("#modal_search_ship_vias .modal-body").load(url + 'main/modal_ship_via/');
+        $("#modal_search_ship_vias .modal-body").load(url + 'orders/modal_ship_via/');
         $("#modal_search_ship_vias").modal("show");
     });
 
@@ -180,7 +180,7 @@ $(function() {
 
     $("#bt_model_terms").click(function() {
         console.debug("===> bt_model_terms");
-        $("#modal_search_terms .modal-body").load(url + 'main/modal_terms');
+        $("#modal_search_terms .modal-body").load(url + 'orders/modal_terms');
         $("#modal_search_terms").modal("show");
     });
 
@@ -205,7 +205,7 @@ $(function() {
             alert("Please, complete Sold to Fields");
             return false;
         }
-        $("#modal_search_item .modal-body").load(url + 'main/modal_products_items');
+        $("#modal_search_item .modal-body").load(url + 'orders/modal_products_items');
         $("#modal_search_item").modal("show");
         return false;
     });
@@ -237,7 +237,7 @@ $(function() {
             var data_ajax = {
                 'dataType': 'json',
                 'method': 'GET',
-                'url': url + 'main/getItem/' + $(this).val(),
+                'url': url + 'orders/getItem/' + $(this).val(),
                 success: function(response) {
                     console.log(response);
                     if (!response.status) {
@@ -422,7 +422,7 @@ $(function() {
         var data_ajax = {
             'dataType': 'json',
             'method': 'POST',
-            'url': url + 'main/add_item_cart/',
+            'url': url + 'orders/add_item_cart/',
             data: $('#item_section').find("input,textarea"),
             success: function(response) {
 
@@ -545,9 +545,9 @@ $(function() {
         var data_ajax = {
             'dataType': 'json',
             'method': 'GET',
-            'url': url + 'main/remove_item_cart/' + item_n,
+            'url': url + 'orders/remove_item_cart/' + item_n,
             success: function(response) {
-                console.log('main/remove_item_cart/' + item_n);
+                console.log('orders/remove_item_cart/' + item_n);
                 console.log(response);
                 //$("#cart_table").DataTable().row($(this).parents('tr')).remove().draw();
                 $("#cart_table").DataTable().ajax.reload();
