@@ -188,8 +188,9 @@
     }
     
     #cart_table .btn.btn-link {
-        padding: 0px 5px;
+        padding: 0px 0px;
         font-weight: bold;
+        display: inline;
     }
     
     .find_customer_datatable .table-sm td,
@@ -261,6 +262,15 @@
     
     #loadingDiv {
         display: none;
+    }
+    
+    @media (max-width: 1300px) {
+        #cart_table .btn.btn-link {
+            padding: 0px 0px;
+            font-weight: bold;
+            display: inline;
+            font-size: 12px;
+        }
     }
     
     @media (min-width: 992px) and (max-width: 1200px) {

@@ -42,7 +42,7 @@ $(function() {
                             '<button type="button" class="bt_item_external btn btn-xs btn-info mr-1 " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
                         col1 = " -  " + index;
                         col2 = '<input type="text" id="item_item_number_' + index + '" name="items[' + index + '][item_number]" class="intput_item form-control form-control-sm"  value="' + item.item_number + '" style="width:180px" disabled>';
-                        col3 = '<textarea type="text" id="item_item_description_' + index + '"name="items[' + index + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; height: 30px;" data-description="' + item.item_description_ + '" disabled  >' + item.item_description_ + '</textarea>';
+                        col3 = '<textarea type="text" id="item_item_description_' + index + '"name="items[' + index + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; min-height: 60px;" data-description="' + item.item_description_ + '" disabled  >' + item.item_description_ + '</textarea>';
                         col4 = '<input type="text" id="item_order_qty_' + index + '" name="items[' + index + '][order_qty]" class=" order_qty form-control form-control-sm text-right" value="' + item.order_qty + '" disabled>';
                         col5 = '<input type="text" id="item_ship_qty_' + index + '" name="items[' + index + '][ship_qty]" class="ship_qty form-control form-control-sm text-right" value="' + item.ship_qty + '" disabled >';
                         col6 = '<input type="text" id="item_bko_qty_' + index + '" name="items[' + index + '][bko_qty]" class=" bko_qty form-control form-control-sm text-right" value="' + item.bko_qty + '" disabled>';
@@ -279,7 +279,13 @@ $(function() {
     });
 
 
-
+    function check_item_load() {
+        if ($("#item_number").val().length == 0) {
+            alert("You must to complete ITEM NUMBER field and ORDER QTY");
+            return false;
+        }
+        return true;
+    }
     // Item Calc Section
 
     $("#bt_clear_product_form1,#bt_clear_product_form2").click(function() {
@@ -288,10 +294,12 @@ $(function() {
     });
 
     $(document).on('change', '#item_section #order_qty', function() {
+
         $('#item_section #ship_qty').val($(this).val()).trigger('change');
     });
     //clean item_section inputs
     $(document).on('click', '#item_section #order_qty', function() {
+        check_item_load();
         $(this).val(null);
         $("#item_section #ship_qty").val(null);
         $("#item_section #bko_qty").val(null);
@@ -304,6 +312,7 @@ $(function() {
     });
 
     $(document).on('change', '#item_section #ship_qty', function() {
+
         $('#item_section #ship_qty').val($(this).val());
         var ship_qty = $(this).val();
         var unit_price = ($("#item_section #unit_price").val() != '' && $("#item_section #unit_price").val() != 0) ? $("#item_section #unit_price").val() : 0;
@@ -316,9 +325,11 @@ $(function() {
     })
 
     $(document).on('click', '#item_section #bko_qty', function() {
+        check_item_load();
         $(this).val(null);
     });
     $(document).on('change', '#item_section #bko_qty', function() {
+
         var bko_qty = ($(this).val() != '' || $(this).val() != 0) ? $(this).val() : 0;
 
         if (bko_qty == 0) {
@@ -333,6 +344,7 @@ $(function() {
 
 
     $(document).on('click', '#item_section #unit_price', function() {
+        check_item_load();
         $(this).val(null);
     });
     $(document).on('change', '#item_section #unit_price', function() {
@@ -346,6 +358,7 @@ $(function() {
 
 
     $(document).on('click', '#item_section #discuount', function() {
+        check_item_load();
         $(this).val(null);
     });
     $(document).on('change', '#item_section #discuount', function() {
@@ -395,6 +408,11 @@ $(function() {
     }
 
     $("#bt_add_product").click(function() {
+
+        if ($("#item_number").val() == '' || $("#order_qty").val() == '') {
+            alert("You must to complete ITEM NUMBER field and ORDER QTY");
+            return false;
+        }
         console.debug("===> bt_add_product");
         console.debug('===> item_number: %o', $("#item_number").val());
         console.debug('===> order_qty: %o', $("#order_qty").val());
@@ -425,10 +443,7 @@ $(function() {
         $("#bko_total").val(null);
 
         /*
-        if ($("#item_number").val() == '' || $("#order_qty").val() == '') {
-            alert("You must to complete ITEM NUMBER field and ORDER QTY");
-            return false;
-        }
+        
         var i = $("#cart_table").DataTable().rows().count() + 1;
         var col0, col1, col2, col3, col4, col5, col6, col7, col8 = '';
 

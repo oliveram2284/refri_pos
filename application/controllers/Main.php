@@ -44,6 +44,8 @@ class Main extends CI_Controller {
 	}
 
 	public function new_order(){
+
+		$this->clean_cart();
 		$this->load->view('layout/header.php');
 		$data=array();
 		$id='129';
@@ -241,14 +243,14 @@ class Main extends CI_Controller {
 		//var_dump($this->session->userdata('cart'));
 		//$this->session->unset_userdata('cart');
 		//var_dump($this->session->userdata('cart'));
-		echo json_encode(array('cart'=>($this->session->userdata('cart')?$this->session->userdata('cart'):array())));
+		echo json_encode(array('cart'=>($this->session->userdata('cart')?$this->session->userdata('cart'):array())))	;
 	}
 	public function clean_cart($item_number=null){
 		
-		var_dump($this->session->userdata('cart'));
+		//var_dump($this->session->userdata('cart'));
 		$this->session->unset_userdata('cart');
-		var_dump($this->session->userdata('cart'));
-		echo "session cleaned";
+		//var_dump($this->session->userdata('cart'));
+		
 	}
 
 	
