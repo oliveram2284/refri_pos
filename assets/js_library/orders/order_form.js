@@ -35,6 +35,12 @@ $(function() {
                     var col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10 = '';
                     console.log(index);
                     console.log(item);
+
+                    description = item.item_description_;
+                    console.log(description);
+                    description = description.split('\n').join(' '); //.replace('\n', ' ').replace('\n', ' ');
+                    console.log(description);
+
                     col0 =
                         '<button type="button" class=" bt_item_view btn btn-xs btn-warning mr-1" disabled><i class="fas fa-eye fa-sm"></i></button>' +
                         '<button type="button" class="bt_item_edit btn btn-xs btn-success mr-1 " data-item_number="' + item.item_number + '"><i class="fas fa-edit fa-sm"></i></button>' +
@@ -42,7 +48,7 @@ $(function() {
                         '<button type="button" class="bt_item_external btn btn-xs btn-info mr-1 " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
                     col1 = " -  " + index;
                     col2 = '<input type="text" id="item_item_number_' + index + '" name="items[' + index + '][item_number]" class="intput_item form-control form-control-sm"  value="' + item.item_number + '" style="width:180px" disabled>';
-                    col3 = '<textarea type="text" id="item_item_description_' + index + '"name="items[' + index + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; min-height: 60px;" data-description="' + item.item_description_ + '" disabled  >' + item.item_description_ + '</textarea>';
+                    col3 = '<textarea type="text" id="item_item_description_' + index + '"name="items[' + index + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; height: 31px;" data-description="' + description + '" disabled  >' + description + '</textarea>';
                     col4 = '<input type="text" id="item_order_qty_' + index + '" name="items[' + index + '][order_qty]" class=" order_qty form-control form-control-sm text-right" value="' + item.order_qty + '" disabled>';
                     col5 = '<input type="text" id="item_ship_qty_' + index + '" name="items[' + index + '][ship_qty]" class="ship_qty form-control form-control-sm text-right" value="' + item.ship_qty + '" disabled >';
                     col6 = '<input type="text" id="item_bko_qty_' + index + '" name="items[' + index + '][bko_qty]" class=" bko_qty form-control form-control-sm text-right" value="' + item.bko_qty + '" disabled>';
