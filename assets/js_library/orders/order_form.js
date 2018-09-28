@@ -27,18 +27,13 @@ $(function() {
             'method': 'POST',
             'url': url + 'orders/get_cart',
             'dataSrc': function(response) {
-                console.log("main / get_cart");
-                console.log(response);
-                var output = [];
 
+                var output = [];
                 $.each(response.cart, function(index, item) {
-                    var col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10 = '';
-                    console.log(index);
-                    console.log(item);
+                    var col0, col1, col2, col3, col4, col5, col6, col7, col8, col9 = '';
 
                     description = item.item_description_;
-                    console.log(description);
-                    description = description.split('\n').join(' '); //.replace('\n', ' ').replace('\n', ' ');
+                    description = description.split('\n').join(' ');
                     console.log(description);
 
                     col0 =
@@ -56,13 +51,35 @@ $(function() {
                     col8 = '<input type="text" id="item_discuount_' + index + '" name="items[' + index + '][discuount]" class=" discuount form-control form-control-sm text-right" value="' + item.discuount + '" disabled>';
                     col9 = '<input type="text" id="item_exit_price_' + index + '" name="items[' + index + '][exit_price]" class=" exit_price form-control form-control-sm text-right" value="' + item.exit_price + '" disabled>';
 
-
                     output.push([col0, col1, col2, col3, col4, col5, col6, col7, col8, col9]);
                 });
                 return output;
             }
         }
     });
+
+    $(document).find("#cart_table_wrapper .dataTables_empty").html("NO ITEMS IN SHOPPING CART");
+
+
+    $(document).find(".sold_to_inputs input").attr('readonly', true);
+    $(document).find(".items_inputs input").attr('readonly', true);
+
+
+    function disable_sold_inputs() {
+        if ($('form #customer_id').val().length != 0) {
+            $(document).find(".sold_to_inputs input").attr('readonly', false);
+        } else {
+            $(document).find(".sold_to_inputs input").attr('readonly', true);
+        }
+    }
+
+    function disable_items_inputs() {
+        if ($('form #customer_id').val().length != 0) {
+            $(document).find(".items_inputs input").attr('readonly', false);
+        } else {
+            $(document).find(".items_inputs input").attr('readonly', true);
+        }
+    }
 
     // LOAD SEARCH CUSTOMER MODAL
     $("#bt_model_customer").click(function() {
@@ -76,6 +93,7 @@ $(function() {
         $('#sold_section').find("input").val(null);
     });
 
+
     $(document).on('click', '#modal_search_customer #customer_id', function() {
         var data = $(this).data();
         $("form").find("#customer_id").val(data.id);
@@ -84,9 +102,11 @@ $(function() {
         $("form").find('#salesman_name').val(data.salsmen_name);
         $("#modal_search_customer .modal-body").empty();
         $("#modal_search_customer").modal("hide");
+        disable_sold_inputs();
         return false;
     });
     // find CUSTOMER by code
+
     $("form").find("#customer_id").keyup(function(e) {
         if (e.keyCode == 13) {
             var data_ajax = {
@@ -116,11 +136,14 @@ $(function() {
             };
             console.debug("===> data_ajax: %o", data_ajax);
             $.ajax(data_ajax);
+
         } else {
             console.log("===>" + $(this).val());
         }
-    });
+    }).change(function(e) {
 
+        disable_sold_inputs();
+    });
 
 
 
@@ -234,6 +257,7 @@ $(function() {
         $("form").find("#order_qty").focus();
         $("#modal_search_item .modal-body").empty();
         $("#modal_search_item").modal("hide");
+        disable_items_inputs();
         return false;
     });
 
@@ -245,7 +269,7 @@ $(function() {
                 'method': 'GET',
                 'url': url + 'orders/getItem/' + $(this).val(),
                 success: function(response) {
-                    console.log(response);
+
                     if (!response.status) {
 
                         alert("Item not found");
@@ -260,7 +284,6 @@ $(function() {
 
                     }
 
-
                     return false;
                     if (response.adherent !== undefined) {
                         $("#adherent_name").val(response.adherent.firstname + " " + response.adherent.lastname);
@@ -272,11 +295,14 @@ $(function() {
                     console.debug("===> ERROR: %o", error);
                 }
             };
-            console.debug("===> data_ajax: %o", data_ajax);
+
             $.ajax(data_ajax);
+            disable_items_inputs();
         } else {
             console.log("===>" + $(this).val());
         }
+    }).change(function(e) {
+        disable_items_inputs();
     });
 
 
@@ -286,10 +312,10 @@ $(function() {
 
 
     function check_item_load() {
-        if ($("#item_number").val().length == 0) {
+        /*if ($("#item_number").val().length == 0) {
             alert("You must to complete ITEM NUMBER field and ORDER QTY");
             return false;
-        }
+        }*/
         return true;
     }
     // Item Calc Section
@@ -448,35 +474,7 @@ $(function() {
         $("#order_total").val(null);
         $("#bko_total").val(null);
 
-        /*
-        
-        var i = $("#cart_table").DataTable().rows().count() + 1;
-        var col0, col1, col2, col3, col4, col5, col6, col7, col8 = '';
-
-        col0 =
-            '<button type="button" class=" bt_item_view btn btn-xs btn-warning mr-1" disabled><i class="fas fa-eye fa-sm"></i></button>' +
-            '<button type="button" class="bt_item_edit btn btn-xs btn-success mr-1 " ><i class="fas fa-edit fa-sm"></i></button>' +
-            '<button type="button" class="bt_item_delete btn btn-xs btn-danger mr-1 " ><i class="far fa-trash-alt fa-sm "></i></button>' +
-            '<button type="button" class="bt_item_external btn btn-xs btn-info mr-1 " disabled><i class="fas fa-external-link-square-alt fa-sm " ></i></button>';
-        col1 = " -  " + i;
-        col2 = " -  " + i;
-        col3 = '<input type="text" id="item_item_number_' + i + '" name="items[' + i + '][item_number]" class="intput_item form-control form-control-sm"  value="' + $("#item_number").val() + '" style="width:180px" disabled>';
-        //col3 = '<input type="text" id="item' + i + '" name="items[item_number]" class="form-control form-control-sm" value="' + $("#item_description").val() + '">';
-        col4 = '<textarea type="text" id="item_item_description_' + i + '"name="items[' + i + '][item_description]" class="item_description form-control form-control-sm" style="width: 500px; height: 30px;" data-description="' + $("#item_description").val() + '" disabled  >' + $("#item_description").val().replace('\n', ' ').replace('\n', ' ') + '</textarea>';
-        col5 = '<input type="text" id="item_order_qty_' + i + '" name="items[' + i + '][order_qty]" class=" order_qty form-control form-control-sm text-right" value="' + $("#order_qty").val() + '" disabled>';
-        col6 = '<input type="text" id="item_ship_qty_' + i + '" name="items[' + i + '][ship_qty]" class="ship_qty form-control form-control-sm text-right" value="' + $("#ship_qty").val() + '" disabled >';
-        col7 = '<input type="text" id="item_bko_qty_' + i + '" name="items[' + i + '][bko_qty]" class=" bko_qty form-control form-control-sm text-right" value="' + $("#bko_qty").val() + '" disabled>';
-        col8 = '<input type="text" id="item_unit_price_' + i + '" name="items[' + i + '][unit_price]" class=" unit_price form-control form-control-sm text-right" value="' + $("#unit_price").val() + '" disabled>';
-        col9 = '<input type="text" id="item_discuount_' + i + '" name="items[' + i + '][discuount]" class=" discuount form-control form-control-sm text-right" value="' + $("#discuount").val() + '" disabled>';
-        col10 = '<input type="text" id="item_exit_price_' + i + '" name="items[' + i + '][exit_price]" class=" exit_price form-control form-control-sm text-right" value="' + $("#exit_price").val() + '" disabled>';
-
-        $("#item_section").find("input,textarea").val(null);
-
-        $("#cart_table").DataTable().row.add([col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10]).draw();
-
-        calc_or_totals();
-        $("#order_total").val(null);
-        $("#bko_total").val(null);*/
+        disable_items_inputs();
 
     });
 

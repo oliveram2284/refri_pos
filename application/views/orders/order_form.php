@@ -5,8 +5,8 @@
 					<div id="section_seler" class="row border border-light" >
 						
 						<div class="col border "> 
-							<label><strong>OPR: </strong> <input type="text" id="operador_name-input"  class="control-form input_custom" value="<?php echo $operator['first_name']." ".$operator['last_name']?>" size="20" /></label> 
-							<label><strong>LOC: </strong> <input type="text" id="operador_location-input"  class="input_custom" value="<?php echo $operator['city']?>"/></label>
+							<label><strong>OPR: </strong> <input type="text" id="operador_name-input"  class="control-form input_custom" value="<?php echo $operator['first_name']." ".$operator['last_name']?>" size="20" readonly /></label> 
+							<label><strong>LOC: </strong> <input type="text" id="operador_location-input"  class="input_custom" value="<?php echo $operator['city']?>" readonly/></label>
 						</div>						
 						<div class="col border text-center"> 
 							<div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -69,29 +69,29 @@
 							</label>	
 						</div>
 						
-						<div class="col  border">
+						<div class="col  border sold_to_inputs" >
                             <label><strong>SHIP TO: </strong> <input type="text" id="ship_id" name="ship_id"  class="input_custom"  size="5" />  
                             <button type="button" id="bt_model_ship" class="btn btn-success btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
 							<input type="text" id="ship_customer_name" name="ship_customer_name"  class="input_custom" style="width:100%;" />	
 						</div>
-						<div class="col border"> 
+						<div class="col border sold_to_inputs"> 
                             <label><strong>SALS: </strong> <input type="text" id="salesman_id" name="salesman_id"  class="input_custom"  size="5" /><!-- <span>123</span> -->
                             <button type="button" id="bt_model_sales" class="btn btn-info btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
 							<label><input type="text" id="salesman_name" name="salesman_name"  class="input_custom" style="width:100%;" /> <!-- <span>PEDRO RODRIGUEZ</span> --> </label>
 						</div>
-						<div class="col  border">
+						<div class="col  border sold_to_inputs">
 							<label><strong>ORDER BY: </strong> <input type="text" class="input_custom" value="" size="20"/> <span></span> </label> 
 							<label><strong>P/O NUM: </strong>  <input type="text" class="input_custom" value="" size="20"/> <span></span></label>	
 						</div>
 
 						
 
-						<div class="col  border">
+						<div class="col  border sold_to_inputs">
                             <label><strong>SHIP VIA: </strong>  <input type="text" id="ship_via_id" name="ship_via_id"  class="input_custom"  size="5" /> <!--<span>123456</span>--> 
                             <button type="button"  id="bt_model_ship_via" class="btn btn-success btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
 							<label><input type="text" id="ship_via_description" name="ship_via_description"  class="input_custom" value="" style="width:100%;"/> <!--<span>FEDEX NEXT DAY 10AM</span> --></label>	
 						</div>
-						<div class="col  border">
+						<div class="col  border sold_to_inputs">
                             <label><strong>TERMS: </strong><input type="text" id="term_id" name="term_id" class="input_custom" value="" size="6"/> 
                             <button type="button" id="bt_model_terms" class="btn btn-success btn-xs float-right"><i class="fas fa-search fa-xs"></i></button> </label> 
 							<label> <input type="text"  id="term_description" name="term_description" class="input_custom" value="" style="width:100%;"/> <!-- span>NET 30 2% 10 DAYS</span> --></label>	
@@ -126,31 +126,31 @@
 							-->
 							<textarea type="text" id="item_description" name="item_description " class="form-control input_custom" ></textarea>
 						</div>
-						<div class="col  border text-right">
+						<div class="col  border text-right items_inputs">
 							<label><strong>ORDER QTY</strong> </label>	
 							<input type="text" min="0" value="" step="any" id="order_qty" name="order_qty" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col  border text-right">
+						<div class="col  border text-right items_inputs">
 							<label><strong>SHIP QTY</strong> </label>	
 							<input type="text" id="ship_qty" name="ship_qty" class="form-control form-control-sm text-right" value="">	
 						</div> 
-						<div class="col  border text-right">
+						<div class="col  border text-right items_inputs">
 							<label><strong>BKO QTY</strong> </label>	
 							<input type="text" id="bko_qty" name="bko_qty" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col  border text-right">
+						<div class="col  border text-right items_inputs">
 							<label><strong>UNIT PRICE</strong> </label>	
 							<input type="text" min="0" step="0.101"  pattern="^\d+(?:\.\d{1,2})?" id="unit_price" name="unit_price" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col  border text-right">
+						<div class="col  border text-right items_inputs">
 							<label><strong>DISC %</strong> </label>	
 							<input type="text"  min="0" step="0.101"  pattern="^\d+(?:\.\d{1,2})?" id="discuount" name="discuount" class="form-control form-control-sm text-right" value="">	
 						</div>
-						<div class="col  border text-right">
+						<div class="col  border text-right items_inputs">
 							<label><strong>EXT PRICE</strong> </label>	
 							<input type="text"   min="0" step="0.101" pattern="^\d+(?:\.\d{1,2})?$" id="exit_price" name="exit_price" class="form-control form-control-sm text-right" disabled>	
 						</div>
-						<div class="col  border text-center">
+						<div class="col  border text-center items_inputs">
 							<label class="text-center title">TX </label>	
 							<label class="text-center radio_tx"><input class="" type="radio" name="tax" id="tax1" value="Y" style="padding-left:  5px !important;">
 							Yes</label>	

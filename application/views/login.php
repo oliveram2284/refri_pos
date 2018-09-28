@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>REFRI POS</title>
+    <title>REFRICENTER POS</title>
 
     <!-- Bootstrap core CSS -->
 	<link href="<?php  echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
 	-->
 		<?php echo form_open('login',array('method'=>'post','class'=>'form-signin')); ?>
-		<h1 class="h3 mb-3 font-weight-normal">REFRI</h1>
+		<h1 class="h3 mb-3 font-weight-normal">REFRICENTER POS</h1>
 		<h4 class="h3 mb-3 font-weight-normal">Login</h4>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required="" autofocus="">

@@ -136,6 +136,19 @@ class Operators extends CI_Model {
                 'constraint' => '1',
                 'null' => false,
             ), 
+            
+            'cmanager'=>array(
+                'description'=>'change discount',
+                'type' => 'tinyint',
+                'constraint' => '1',
+                'null' => false,
+            ), 
+            'ctakeoorder'=>array(
+                'description'=>'change discount',
+                'type' => 'tinyint',
+                'constraint' => '1',
+                'null' => false,
+            ), 
             'pquote'=>array(
                 'description'=>'permitted to quote',
                 'type' => 'tinyint',
@@ -188,6 +201,12 @@ class Operators extends CI_Model {
 
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('operators',true);
+
+        /*
+        ALTER TABLE `operators`
+        ADD COLUMN `cmanager` TINYINT(1) NOT NULL AFTER `cdiscount`,
+        ADD COLUMN `ctakeoorder` TINYINT(1) NOT NULL AFTER `cmanager`;
+        */
     }
 
 
